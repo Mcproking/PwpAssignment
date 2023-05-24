@@ -28,7 +28,7 @@ def logincheck(username,password):
     
     for user in Users:
         if user[0] == username and user[1] == password:
-           print("Sucess") # prob make another function here
+           print("Success") # prob make another function here
            break
     else:
         print("Username or Password Incorrect")
