@@ -1,3 +1,139 @@
+def cancel():
+    print("Cancelling...")
+    print("Cancelled")
+
+def code():
+    while True:
+        try:
+            code = int(input("Enter the code of the item or enter '-1' to cancel: "))
+            if code == -1:
+                cancel()
+                return code
+            else:
+                return code
+        except ValueError:
+            print("Please enter an integer.")
+
+def description():
+    description = str(input("Enter the description of item {code} or enter '-1' to cancel: "))
+    if description == -1:
+        cancel()
+        return description
+    else:
+        description = description.title()
+        return description
+
+def category():
+    category = str(input("Enter the category of {description} or enter '-1' to cancel: "))
+    if category == -1:
+        cancel()
+        return category
+    else:
+        category = category.title()
+        return category
+
+def unit():
+    unit = str(input("Enter the unit of {description} or enter '-1' to cancel: "))
+    if unit == -1:
+        cancel()
+        return unit
+    else:
+        unit = unit.title()
+        return unit
+
+def price():
+    while True:
+        try:
+            price = float(input("Enter the price of {description} or enter '-1' to cancel: "))
+            if price == -1:
+                cancel()
+                return price
+            elif price <= 0:
+                print("Please enter a valid price.")
+            else:
+                price = round(price, 2)
+                return price
+        except ValueError:
+            print("Please enter a valid price.")
+
+def quantity():
+    while True:
+        try:
+            quantity = int(input("Enter the quantity in stock for {description} or enter '-1' to cancel: "))
+            if quantity == -1:
+                cancel()
+                return quantity
+            elif quantity < 0:
+                print("Please enter a valid quantity.")
+            else:
+                return quantity
+        except ValueError:
+            print("Please enter a valid quantity.")
+
+def minimum():
+    while True:
+        try:
+            minimum = int(input("Enter the minimum threshold allowed for {description} or enter '-1' to cancel: "))
+            if minimum == -1:
+                cancel()
+                return minimum
+            elif minimum <= 0:
+                print("Please enter a valid minimum threshold.")
+            else:
+                return minimum
+        except ValueError:
+            print("Please enter a valid minimum threshold.")
+
+def insert():
+    master_insert_list = []
+    while True:
+        code = code()
+        if code == -1:
+            break
+        description = description()
+        if description == -1:
+            break
+        category = category()
+        if category == -1:
+            break
+        unit = unit()
+        if unit == -1:
+            break
+        price = price()
+        if price == -1:
+            break
+        quantity = quantity()
+        if quantity == -1:
+            break
+        minimum = minimum()
+        if quantity == -1:
+            break
+        insert = [code, description, category, unit, price, quantity, minimum]
+        master_insert_list.append(insert)
+
+        while True:
+            choose = str(input("Do you still want to insert more items? Enter Y for Yes or N for No: "))
+            if choose.upper() != "Y" and choose.upper() != "N":
+                print("Please enter Y or N.")
+            else:
+                break
+        if choose.upper() == "Y":
+            continue
+        else:
+            with open("inventory.txt", "a") as f:
+                for item in master_insert_list:
+                    for detail in item:
+                        f.write(f"{detail[0]}/{detail[1]}/{detail[2]}/{detail[3]}/{detail[4]}/{detail[5]}/{detail[6]}")
+            print("Item(s) have been inserted successfully.")
+            break
+
+
+
+
+
+
+
+
 def login():
     while True:
         username = str(input("Enter your username: "))
