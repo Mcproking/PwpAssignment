@@ -30,12 +30,14 @@ def clearConsole(length = 5):
     else:
         unixClear()
 
-def readInventory(): # Read the inventory.txt and append into list
+# Read the inventory.txt and append into list
+def readInventory(): 
     with open("./Database/inventory.txt") as f:
         for line in f.readlines(): # read the txt line by line
             item = line.strip().split("/") # remove the \n and "/"
             inventory.append(item)
-            
+
+# ---- Below are Function use for Insert item ----            
 def cancel_insert():
         print("Cancelled")
         print("Back to menu..")     
@@ -122,7 +124,7 @@ def minimum_insert(description):
         except ValueError:
             print("Please enter a valid minimum threshold.")
 
-
+# ---- Primary function below ----
 def login(): # Login Page with user Indentification
     username = str(input("Enter your username: "))
     password = str(input("Enter your password: "))
@@ -395,9 +397,6 @@ def insert(): # Insert New Item | Auth = Admin
             break
     time.sleep(2)
     LoadMenu()
-
-
-
 
 def admin(username): # Admin-Level Consoles
     option = 0
