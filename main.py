@@ -30,6 +30,98 @@ def clearConsole(length = 5):
     else:
         unixClear()
 
+def readInventory(): # Read the inventory.txt and append into list
+    with open("./Database/inventory.txt") as f:
+        for line in f.readlines(): # read the txt line by line
+            item = line.strip().split("/") # remove the \n and "/"
+            inventory.append(item)
+            
+def cancel_insert():
+        print("Cancelled")
+        print("Back to menu..")     
+        
+def code_insert():
+    while True:
+        try:
+            code = int(input("Enter the code of the item or enter '-1' to cancel: "))
+            if code == -1:
+                cancel_insert()
+                return code
+            else:
+                return code
+        except ValueError:
+            print("Please enter an integer.")
+
+def description_insert(code):
+    description = str(input(f"Enter the description of item {code} or enter '-1' to cancel: "))
+    if description == '-1':
+        cancel_insert()
+        return description
+    else:
+        description = description.title()
+        return description
+
+def category_insert(description):
+    category = str(input(f"Enter the category of {description} or enter '-1' to cancel: "))
+    if category == '-1':
+        cancel_insert()
+        return category
+    else:
+        category = category.title()
+        return category
+
+def unit_insert(description):
+    unit = str(input(f"Enter the unit of {description} or enter '-1' to cancel: "))
+    if unit == '-1':
+        cancel_insert()
+        return unit
+    else:
+        unit = unit.title()
+        return unit
+
+def price_insert(description):
+    while True:
+        try:
+            price = float(input(f"Enter the price of {description} or enter '-1' to cancel: "))
+            if price == -1:
+                cancel_insert()
+                return price
+            elif price <= 0:
+                print("Please enter a valid price.")
+            else:
+                price = round(price, 2)
+                return price
+        except ValueError:
+            print("Please enter a valid price.")
+
+def quantity_insert(description):
+    while True:
+        try:
+            quantity = int(input(f"Enter the quantity in stock for {description} or enter '-1' to cancel: "))
+            if quantity == -1:
+                cancel_insert()
+                return quantity
+            elif quantity < 0:
+                print("Please enter a valid quantity.")
+            else:
+                return quantity
+        except ValueError:
+            print("Please enter a valid quantity.")
+
+def minimum_insert(description):
+    while True:
+        try:
+            minimum = int(input(f"Enter the minimum threshold allowed for {description} or enter '-1' to cancel: "))
+            if minimum == -1:
+                cancel_insert()
+                return minimum
+            elif minimum <= 0:
+                print("Please enter a valid minimum threshold.")
+            else:
+                return minimum
+        except ValueError:
+            print("Please enter a valid minimum threshold.")
+
 
 def login(): # Login Page with user Indentification
     username = str(input("Enter your username: "))
@@ -130,6 +222,183 @@ Enter 2 for Purchaser
             clearConsole(2)
             LoadMenu()
 
+def stockTaking(restart = False): # Stock Taking | Auth = Admin/Inventory Checker
+    
+    item = [None] * 7 # Initalize item with 7 None. To make sure that Item for printitem() function
+    
+    def printitem(): # This Function is created for recalling
+        print(f"<{'-'*7}Item{'-'*7}>")
+        print(f"Name: {item[1]}")
+        print(f"Unit: {item[3]}")
+        print(f"Quantity: {item[5]}")
+
+    if restart: # This only run when recusion happen. When happen, restart value change to True
+        clearConsole(2)
+        print(f"<{'-'*7}Stock Taking{'-'*7}>")
+        print("Restart Stock Taking?")
+        print("0.Restart\n1.Exit To Main Menu")
+        while True:
+            try:
+                userinput = int(input())
+                break
+            except ValueError:
+                print("Enter 0 or 1")
+        if userinput == 1:
+            LoadMenu() 
+        elif userinput == 0:
+            clearConsole(1)
+            pass
+
+    while True: # This is to enter Item Code 
+        try:
+            print(f"<{'-'*7}Stock Taking{'-'*7}>")
+            IdCode = int(input("Enter Item Code:"))
+            break
+        except ValueError:
+            print("Worng Value")
+            clearConsole(1)
+    
+    for item in inventory: # Check the inventory for the correct code, if not recusion happen with 'restart' set to True
+        if int(item[0]) == IdCode:
+            print("Please Wait..")
+            clearConsole(2)
+            item = item
+            oldItemRaw = f"{item[0]}/{item[1]}/{item[2]}/{item[3]}/{item[4]}/{item[5]}/{item[6]}"
+            break
+    else:
+        print("Item do not exist..")
+        stockTaking(restart=True)
+            
+    while True: # This is to print out the user's item from thier chosen ID.
+        printitem()
+        
+        # By printing the item out and reconfirm if this is what the users want
+        while True:
+            try:
+                userinput = int(input("1.Change Quantity\n2.Change Item\n0.Back to Main Menu\n"))
+                break
+            except ValueError:
+                print("Worng Value")
+                clearConsole(2)
+        
+        # From anything from 0 to 2 will be handle, other than that it will reset back to this current while loop
+        if userinput == 0:
+            LoadMenu()
+        elif userinput == 1:
+            break
+        elif userinput == 2:
+            stockTaking(restart=True)
+        else:
+            clearConsole(0.2)
+            pass
+
+        
+    while True:
+        clearConsole(2)
+        printitem()
+        
+        try:
+            quantity = int(input("Enter the new Quantity:"))
+        except ValueError:
+            print("Enter Number Only")
+        
+        # This section is to make sure that the User input's quantity is correct
+        clearConsole(2)
+        printitem()        
+        print(f"\n<---Quantity change from {item[5]} -> {quantity}--->")
+        item[5] = quantity
+        confirmation = int(input("\n1.Confirm\n2.Cancel\n"))
+        
+        if confirmation == 2:
+            print("Returning to Menu..")
+            LoadMenu()
+        elif confirmation == 1:
+            NewItemRaw = f"{item[0]}/{item[1]}/{item[2]}/{item[3]}/{item[4]}/{item[5]}/{item[6]}\n"
+            
+            with open("./Database/inventory.txt","r") as f:
+                lines = f.readlines()
+                
+            with open("./Database/inventory.txt","w") as f:
+                for line in lines:
+                    if line.strip("\n") != oldItemRaw:
+                        f.write(line)
+                f.write(NewItemRaw)
+            print("\nUpdated")
+            print("Returning to Menu..")
+            time.sleep(1)
+            LoadMenu()
+
+def insert(): # Insert New Item | Auth = Admin
+    master_insert_list = []
+    while True:
+        code = code_insert()
+        if code == -1:
+            break
+        description = description_insert(code)
+        if description == "-1":
+            break
+        category = category_insert(description)
+        if category == "-1":
+            break
+        unit = unit_insert(description)
+        if unit == "-1":
+            break
+        price = price_insert(description)
+        if price == -1:
+            break
+        quantity = quantity_insert(description)
+        if quantity == -1:
+            break
+        minimum = minimum_insert(description)
+        if quantity == -1:
+            break
+        insert = [code, description, category, unit, price, quantity, minimum]
+        master_insert_list.append(insert)
+
+        while True:
+            choose = str(input("Do you still want to insert more items? Enter Y for Yes or N for No: "))
+            if choose.upper() != "Y" and choose.upper() != "N":
+                print("Please enter Y or N.")
+            else:
+                break
+        if choose.upper() == "Y":
+            clearConsole(0.2)
+            continue
+        else:
+            clearConsole(0.5)
+            for list in master_insert_list:
+                print(f"Item Code:{list[0]}")
+                print(f"Description:{list[1]}")
+                print(f"Category:{list[2]}")
+                print(f"Unit:{list[3]}")
+                print(f"Price:{list[4]:.2f}")
+                print(f"Quanity:{list[5]}")
+                print(f"Minimum:{list[6]}")
+                print(f"{'-'*15}")
+            print("Please Make Sure the Insert are correct.\nInserted Data can be edited from 2.Update Item")
+            while True:
+                try:
+                    userinput = int(input("1.Contiune\n2.Exit to Main menu\n"))
+                except ValueError:
+                    print("Enter 1 or 2")
+                    
+                if userinput == 1:
+                    break
+                elif userinput == 2:
+                    LoadMenu()
+                    
+            with open("./Database/inventory.txt", "a") as f:   
+                for item in master_insert_list:
+                    f.write(f"{item[0]}/{item[1]}/{item[2]}/{item[3]}/{item[4]}/{item[5]}/{item[6]}\n")
+                    pass
+            print("Item(s) have been inserted successfully.")
+            break
+    time.sleep(2)
+    LoadMenu()
+
+
+
+
 def admin(username): # Admin-Level Consoles
     option = 0
     menu = f"""
@@ -157,12 +426,12 @@ Welcome, {username}
         
         if option == -1:
             print("Program will be exiting soon..")
-            os.sleep(3)
+            time.sleep(3)
             exit()
             
         if option <= 0 or option >= 9:
             print("Please enter an option between 1 to 8")
-            os.sleep(1)
+            time.sleep(1)
             # After the user input the worng value, it will reprint the menu screen
         else:
             break
@@ -170,11 +439,17 @@ Welcome, {username}
     if not V:
         match option:
             case 1:
-                print('Inser New item')
+                clearConsole(2)
+                insert()
+            case 4:
+                clearConsole(2)
+                stockTaking()
             case 8:
                 clearConsole(2)
                 addUser()  
 
+
+# ---- Below are start functions -----
 def startupFirstLogin(): # only use this function once for the program to start
     loginSuccess = (False,-1)
     while not loginSuccess[0]:
@@ -197,7 +472,8 @@ def LoadMenu():
 """
 VERSIONCHECKER WILL RUN 1ST NO MATTER WHAT!
 """
-
+inventory = []
+readInventory()
 V = VERSIONCHECKER() # If the version is 3.10 above, will return FALSE    
 UserDatas = startupFirstLogin() # Userdata consist of 2 main data, username and auth level
 LoadMenu()

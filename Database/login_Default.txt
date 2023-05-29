@@ -1,0 +1,6 @@
+Clement/123/Admin
+Abhishek/123/Admin
+Jaeden/123/Inventory-Checker
+Eugene/123/Inventory-Checker
+Daryl/123/Purchaser
+Shane/123/Purchaser
