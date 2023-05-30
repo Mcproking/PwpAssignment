@@ -116,7 +116,25 @@ def stockTaking(restart = False): # Stock Taking | Auth = Admin/Inventory Checke
                 f.write(NewItemRaw)    
             return
 
-# readInventory()
+def ReplenishsList():
+    Replenish_item = []
+    for item in inventory:
+        if item[5] < item[6]: # if the quanity is less then expected ammount
+            Replenish_item.append(item)
+
+    for item in Replenish_item:
+        print(f"ID Code:{item[0]}")
+        print(f"Item Name:{item[1]}")
+        print(f"Quantity:{item[5]}")
+        print(f"Expected Quanity:{item[6]}")
+        print(f"{'-'*25}")
+
+
+
+
+
+readInventory()
+# ReplenishsList()
 # stockTaking()
 
 # print(inventory)
