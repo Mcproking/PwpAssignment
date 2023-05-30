@@ -1,3 +1,189 @@
+#update
+def cancel_update():
+        print("Cancelled")
+        print("Back to menu..") 
+
+def update_options():
+    print("""
+1. Code
+2. Description
+3. Category
+4. Unit
+5. Price
+6. Minimum Threshold Allowed""")
+
+    while True:
+        try:
+            select = int(input("\nSelect which data to update or enter '-1' to cancel: "))
+            if select == -1:
+                return select
+            elif select < 1 or select > 6:
+                print("Please enter between 1 to 6.")
+            else:
+                return select
+        except ValueError:
+            print("Please enter between 1 to 6.")
+
+def code_update():
+    while True:
+        try:
+            code_up = int(input("Enter the updated code of the item or enter '-1' to cancel: "))
+            if code_up == -1:
+                cancel_update()
+                return code_up
+            elif code_up < 0:
+                print("Please enter a valid code.")
+            else:
+                return code_up
+        except ValueError:
+            print("Please enter a valid code.")
+
+def description_update():
+    description_up = str(input("Enter the updated description of the item or enter '-1' to cancel: "))
+    if description_up == "-1":
+        cancel_update()
+        return description_up
+    else:
+        description_up = description_up.title()
+        return description_up
+
+def category_update():
+    category_up = str(input("Enter the updated category of the item or enter '-1' to cancel: "))
+    if category_up == "-1":
+        cancel_update()
+        return category_up
+    else:
+        category_up = category_up.title()
+        return category_up
+
+def unit_update():
+    unit_up = str(input("Enter the updated unit of the item or enter '-1' to cancel: "))
+    if unit_up == "-1":
+        cancel_update()
+        return unit_up
+    else:
+        unit_up = unit_up.title()
+        return unit_up
+
+def price_update():
+    while True:
+        try:
+            price_up = float(input("Enter the updated price of the item or enter '-1' to cancel: "))
+            if price_up == -1:
+                cancel_update()
+                return price_up
+            elif price_up <= 0:
+                print("Please enter a valid price.")
+            else:
+                price_up = round(price_up, 2)
+                return price_up
+        except ValueError:
+            print("Please enter a valid price.")
+
+def minimum_update():
+    while True:
+        try:
+            minimum_up = int(input("Enter the updated minimum threshold allowed for the item or enter '-1' to cancel: "))
+            if minimum_up == -1:
+                cancel_update()
+                return minimum_up
+            elif minimum_up <= 0:
+                print("Please enter a valid minimum threshold.")
+            else:
+                return minimum_up
+        except ValueError:
+            print("Please enter a valid minimum threshold.")
+
+def update(code_up, description_up, category_up, unit_up, price_up, minimum_up):
+    master_update_list = []
+    while True:
+        try:
+            item = int(input("Enter the code of the item that you want to update or enter '-1' to cancel: "))
+            if item == -1:
+                cancel_update()
+                break
+            elif item < 0:
+                print("Please enter a valid code.")
+            else:
+                with open("./Database/inventory.txt", "r+") as f:
+                    f.seek(0)
+                    for line in f.readlines():
+                        itemDetails = line.strip().split("/")
+                        master_update_list.append(itemDetails)
+                for items in master_update_list:
+                    if items[0] == item:
+                        print("\n")
+                        print(items, end = "\n")
+                        update_options()
+                        if update_options() == -1:
+                            break
+                        elif update_options() == 1:
+                            code_update()
+                            items[0] = code_up
+                            detail = "/".join(items)
+                            f.write(detail + "\n")
+                        elif update_options() == 2:
+                            description_update()
+                            items[1] = description_up
+                            detail = "/".join(items)
+                            f.write(detail + "\n")
+                        elif update_options() == 3:
+                            category_update()
+                            items[2] = category_up
+                            detail = "/".join(items)
+                            f.write(detail + "\n")
+                        elif update_options() == 4:
+                            unit_update()
+                            items[3] = unit_up
+                            detail = "/".join(items)
+                            f.write(detail + "\n")
+                        elif update_options() == 5:
+                            price_update()
+                            items[4] = price_up
+                            detail = "/".join(items)
+                            f.write(detail + "\n")
+                        else:
+                            minimum_update()
+                            items[6] = minimum_up
+                            detail = "/".join(items)
+                            f.write(detail + "\n")
+                        break
+                    else:
+                        print("Item not found.")
+                        break
+                if update_options() == -1:
+                    break
+        except ValueError:
+            print("Please enter a valid code.")
+        
+        while True:
+            choose_up = str(input("Do you still want to update more items? Enter Y for Yes or N for No: "))
+            if choose_up.upper() != "Y" and choose_up.upper() != "N":
+                print("Please enter Y or N.")
+            else:
+                break
+        if choose_up.upper() == "Y":
+            continue
+        else:
+            print("Item(s) have been updated successfully.")
+            break    
+
+                        
+
+        
+
+
+
+
+
+
+
+
+
+
+
+
+#Insert
 def cancel():
     print("Cancelling...")
     print("Cancelled")

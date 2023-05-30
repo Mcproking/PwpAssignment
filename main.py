@@ -10,7 +10,7 @@ def VERSIONCHECKER():
         print("Using Python 2, Please Python 3")
         exit()
     if int(version[1]) <= 9:
-        print("Match Case Doesnt Exist. Changing to If-Else")
+        print("Match Case Doesn't Exist. Changing to If-Else")
         return True
     else:
         print("Python up-to-date beyond 3.10")
@@ -18,7 +18,7 @@ def VERSIONCHECKER():
 
 
 # This function is to clear the console. Mainly not to overfill the entire console.
-# IMPORTANT!!! DEFUALT TIMER IS 5 SECOND, NEED FOR LONGER ENTER THE VALUE
+# IMPORTANT!!! DEFAULT TIMER IS 5 SECONDS, NEED FOR LONGER ENTER THE VALUE
 def clearConsole(length = 5):
     def windowsClear():
         os.system('cls')
@@ -49,10 +49,12 @@ def code_insert():
             if code == -1:
                 cancel_insert()
                 return code
+            elif code < 0:
+                print("Please enter a valid code.")
             else:
                 return code
         except ValueError:
-            print("Please enter an integer.")
+            print("Please enter a valid code.")
 
 def description_insert(code):
     description = str(input(f"Enter the description of item {code} or enter '-1' to cancel: "))
@@ -125,7 +127,7 @@ def minimum_insert(description):
             print("Please enter a valid minimum threshold.")
 
 # ---- Primary function below ----
-def login(): # Login Page with user Indentification
+def login(): # Login Page with User Identification
     username = str(input("Enter your username: "))
     password = str(input("Enter your password: "))
     Users = []
@@ -144,7 +146,7 @@ def login(): # Login Page with user Indentification
                         level = 1
                     case 'Purchaser':
                         level = 2
-                print("\nLogin Sucessful!")
+                print("\nLogin Successful")
                 print("Loading Menu...")
                 return True, level, user[0]
     else:
@@ -197,8 +199,8 @@ Enter 2 for Purchaser
                 role = "User"
                 
             while True:
-                print(f"\nPlease confirm with the user details\n\nUsername: {username}\nPassword: {password}\nAsscess Level: {role}")
-                finalconfirm = input("\nAre You confirm with the details above? Y/N ")
+                print(f"\nPlease confirm the user details\n\nUsername: {username}\nPassword: {password}\nAccess Level: {role}")
+                finalconfirm = input("\nDo You confirm the above details? Y/N ")
                 
                 if finalconfirm.upper() == "Y": # Insert the value into login.txt
                     break
@@ -209,7 +211,7 @@ Enter 2 for Purchaser
                         clearConsole(2)
                         LoadMenu()
                     elif reset.upper() == "Y":
-                        print("Resting User Creation..")
+                        print("Reseting User Creation..")
                         clearConsole(2)
                         addUser()
                     else:
@@ -234,7 +236,7 @@ def stockTaking(restart = False): # Stock Taking | Auth = Admin/Inventory Checke
         print(f"Unit: {item[3]}")
         print(f"Quantity: {item[5]}")
 
-    if restart: # This only run when recusion happen. When happen, restart value change to True
+    if restart: # This only runs when recursion happens. When recursion happens, restart value change to True
         clearConsole(2)
         print(f"<{'-'*7}Stock Taking{'-'*7}>")
         print("Restart Stock Taking?")
@@ -257,10 +259,10 @@ def stockTaking(restart = False): # Stock Taking | Auth = Admin/Inventory Checke
             IdCode = int(input("Enter Item Code:"))
             break
         except ValueError:
-            print("Worng Value")
+            print("Wrong Value")
             clearConsole(1)
     
-    for item in inventory: # Check the inventory for the correct code, if not recusion happen with 'restart' set to True
+    for item in inventory: # Check the inventory for the correct code, if not recursion happens with 'restart' set to True
         if int(item[0]) == IdCode:
             print("Please Wait..")
             clearConsole(2)
@@ -271,19 +273,19 @@ def stockTaking(restart = False): # Stock Taking | Auth = Admin/Inventory Checke
         print("Item do not exist..")
         stockTaking(restart=True)
             
-    while True: # This is to print out the user's item from thier chosen ID.
+    while True: # This is to print out the user's item from their chosen ID.
         printitem()
         
-        # By printing the item out and reconfirm if this is what the users want
+        # By printing the item out and reconfirm whether this is what the user wants
         while True:
             try:
                 userinput = int(input("1.Change Quantity\n2.Change Item\n0.Back to Main Menu\n"))
                 break
             except ValueError:
-                print("Worng Value")
+                print("Wrong Value")
                 clearConsole(2)
         
-        # From anything from 0 to 2 will be handle, other than that it will reset back to this current while loop
+        # Anything from 0 to 2 will be handled, other than that it will be reset back to this current while loop
         if userinput == 0:
             LoadMenu()
         elif userinput == 1:
@@ -377,10 +379,10 @@ def insert(): # Insert New Item | Auth = Admin
                 print(f"Quanity:{list[5]}")
                 print(f"Minimum:{list[6]}")
                 print(f"{'-'*15}")
-            print("Please Make Sure the Insert are correct.\nInserted Data can be edited from 2.Update Item")
+            print("Please Make Sure the Insert Values are correct.\nInserted Data can be edited from 2.Update Item")
             while True:
                 try:
-                    userinput = int(input("1.Contiune\n2.Exit to Main menu\n"))
+                    userinput = int(input("1.Continue\n2.Exit to Main menu\n"))
                 except ValueError:
                     print("Enter 1 or 2")
                     
