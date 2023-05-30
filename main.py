@@ -10,8 +10,8 @@ def VERSIONCHECKER():
         print("Using Python 2, Please Python 3")
         exit()
     if int(version[1]) <= 9:
-        print("Running Python 3.9.x, Please change to Python 3.10.x")
-        exit()
+        print("Match Case Doesnt Exist. Changing to If-Else")
+        return True
     else:
         print("Python up-to-date beyond 3.10")
         return False
@@ -139,16 +139,17 @@ def login(): # Login Page with User Identification
     
     for user in Users:
         if user[0] == username and user[1] == password:
-            match user[2]:
-                case 'Admin':
-                    level = 0
-                case 'Inventory-Checker':
-                    level = 1
-                case 'Purchaser':
-                    level = 2
-            print("\nLogin Successful")
-            print("Loading Menu...")
-            return True, level, user[0]
+            if not V:
+                match user[2]:
+                    case 'Admin':
+                        level = 0
+                    case 'Inventory-Checker':
+                        level = 1
+                    case 'Purchaser':
+                        level = 2
+                print("\nLogin Sucessful!")
+                print("Loading Menu...")
+                return True, level, user[0]
     else:
         print("Username or Password Incorrect")
         return False, -1
