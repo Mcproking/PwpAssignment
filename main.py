@@ -10,15 +10,15 @@ def VERSIONCHECKER():
         print("Using Python 2, Please Python 3")
         exit()
     if int(version[1]) <= 9:
-        print("Match Case Doesnt Exist. Changing to If-Else")
-        return True
+        print("Running Python 3.9.x, Please change to Python 3.10.x")
+        exit()
     else:
         print("Python up-to-date beyond 3.10")
         return False
 
 
 # This function is to clear the console. Mainly not to overfill the entire console.
-# IMPORTANT!!! DEFUALT TIMER IS 5 SECOND, NEED FOR LONGER ENTER THE VALUE
+# IMPORTANT!!! DEFAULT TIMER IS 5 SECONDS, NEED FOR LONGER ENTER THE VALUE
 def clearConsole(length = 5):
     def windowsClear():
         os.system('cls')
@@ -32,6 +32,7 @@ def clearConsole(length = 5):
 
 # Read the inventory.txt and append into list
 def readInventory(): 
+    inventory.clear()
     with open("./Database/inventory.txt") as f:
         for line in f.readlines(): # read the txt line by line
             item = line.strip().split("/") # remove the \n and "/"
@@ -49,10 +50,12 @@ def code_insert():
             if code == -1:
                 cancel_insert()
                 return code
+            elif code < 0:
+                print("Please enter a valid code.")
             else:
                 return code
         except ValueError:
-            print("Please enter an integer.")
+            print("Please enter a valid code.")
 
 def description_insert(code):
     description = str(input(f"Enter the description of item {code} or enter '-1' to cancel: "))
@@ -125,7 +128,7 @@ def minimum_insert(description):
             print("Please enter a valid minimum threshold.")
 
 # ---- Primary function below ----
-def login(): # Login Page with user Indentification
+def login(): # Login Page with User Identification
     username = str(input("Enter your username: "))
     password = str(input("Enter your password: "))
     Users = []
@@ -136,17 +139,16 @@ def login(): # Login Page with user Indentification
     
     for user in Users:
         if user[0] == username and user[1] == password:
-            if not V:
-                match user[2]:
-                    case 'Admin':
-                        level = 0
-                    case 'Inventory-Checker':
-                        level = 1
-                    case 'Purchaser':
-                        level = 2
-                print("\nLogin Sucessful!")
-                print("Loading Menu...")
-                return True, level, user[0]
+            match user[2]:
+                case 'Admin':
+                    level = 0
+                case 'Inventory-Checker':
+                    level = 1
+                case 'Purchaser':
+                    level = 2
+            print("\nLogin Successful")
+            print("Loading Menu...")
+            return True, level, user[0]
     else:
         print("Username or Password Incorrect")
         return False, -1
@@ -197,8 +199,8 @@ Enter 2 for Purchaser
                 role = "User"
                 
             while True:
-                print(f"\nPlease confirm with the user details\n\nUsername: {username}\nPassword: {password}\nAsscess Level: {role}")
-                finalconfirm = input("\nAre You confirm with the details above? Y/N ")
+                print(f"\nPlease confirm the user details\n\nUsername: {username}\nPassword: {password}\nAccess Level: {role}")
+                finalconfirm = input("\nDo You confirm the above details? Y/N ")
                 
                 if finalconfirm.upper() == "Y": # Insert the value into login.txt
                     break
@@ -209,7 +211,7 @@ Enter 2 for Purchaser
                         clearConsole(2)
                         LoadMenu()
                     elif reset.upper() == "Y":
-                        print("Resting User Creation..")
+                        print("Reseting User Creation..")
                         clearConsole(2)
                         addUser()
                     else:
@@ -234,7 +236,7 @@ def stockTaking(restart = False): # Stock Taking | Auth = Admin/Inventory Checke
         print(f"Unit: {item[3]}")
         print(f"Quantity: {item[5]}")
 
-    if restart: # This only run when recusion happen. When happen, restart value change to True
+    if restart: # This only runs when recursion happens. When recursion happens, restart value change to True
         clearConsole(2)
         print(f"<{'-'*7}Stock Taking{'-'*7}>")
         print("Restart Stock Taking?")
@@ -257,10 +259,10 @@ def stockTaking(restart = False): # Stock Taking | Auth = Admin/Inventory Checke
             IdCode = int(input("Enter Item Code:"))
             break
         except ValueError:
-            print("Worng Value")
+            print("Wrong Value")
             clearConsole(1)
     
-    for item in inventory: # Check the inventory for the correct code, if not recusion happen with 'restart' set to True
+    for item in inventory: # Check the inventory for the correct code, if not recursion happens with 'restart' set to True
         if int(item[0]) == IdCode:
             print("Please Wait..")
             clearConsole(2)
@@ -271,19 +273,19 @@ def stockTaking(restart = False): # Stock Taking | Auth = Admin/Inventory Checke
         print("Item do not exist..")
         stockTaking(restart=True)
             
-    while True: # This is to print out the user's item from thier chosen ID.
+    while True: # This is to print out the user's item from their chosen ID.
         printitem()
         
-        # By printing the item out and reconfirm if this is what the users want
+        # By printing the item out and reconfirm whether this is what the user wants
         while True:
             try:
                 userinput = int(input("1.Change Quantity\n2.Change Item\n0.Back to Main Menu\n"))
                 break
             except ValueError:
-                print("Worng Value")
+                print("Wrong Value")
                 clearConsole(2)
         
-        # From anything from 0 to 2 will be handle, other than that it will reset back to this current while loop
+        # Anything from 0 to 2 will be handled, other than that it will be reset back to this current while loop
         if userinput == 0:
             LoadMenu()
         elif userinput == 1:
@@ -377,10 +379,10 @@ def insert(): # Insert New Item | Auth = Admin
                 print(f"Quanity:{list[5]}")
                 print(f"Minimum:{list[6]}")
                 print(f"{'-'*15}")
-            print("Please Make Sure the Insert are correct.\nInserted Data can be edited from 2.Update Item")
+            print("Please Make Sure the Insert Values are correct.\nInserted Data can be edited from 2.Update Item")
             while True:
                 try:
-                    userinput = int(input("1.Contiune\n2.Exit to Main menu\n"))
+                    userinput = int(input("1.Continue\n2.Exit to Main menu\n"))
                 except ValueError:
                     print("Enter 1 or 2")
                     
@@ -398,7 +400,139 @@ def insert(): # Insert New Item | Auth = Admin
     time.sleep(2)
     LoadMenu()
 
+def ReplenishsList(): # Check Which item to replenish | Auth = Admin/Purchaser
+    Replenish_item = []
+    for item in inventory:
+        if item[5] < item[6]: # if the quanity is less then expected ammount
+            Replenish_item.append(item)
+            
+    print(f"<{'-'*4}Replenish Item List{'-'*4}>\n{'-'*25}")# print out the Replenish_item
+    for item in Replenish_item: 
+        print(f"ID Code:{item[0]}")
+        print(f"Item Name:{item[1]}")
+        print(f"Quantity:{item[5]}")
+        print(f"Expected Quanity:{item[6]}")
+        print(f"{'-'*25}")
+
+def ReplenishItem():
+    while True:   
+        print(f"<{'-'*4}Replenish Item List Menu{'-'*4}>")
+        try:
+            userinput = int(input("1.Add Quantity\n0.Return to Main Menu\n"))
+            break
+        except ValueError:
+            print("Please Enter Numbers")
+            clearConsole(1.5)
+            
+    if userinput == None:
+        ReplenishItem()         
+          
+    if userinput == 1:
+        clearConsole(0.2)
+    elif userinput == 0:
+        LoadMenu()
+    else:
+        print("Enter Value 1 or 0 ")
+        clearConsole(1.5)
+        ReplenishItem()
+    
+    while True:
+        while True:
+            for item in inventory:
+                print(f"ID Code:{item[0]}")
+                print(f"Item Name:{item[1]}")
+                print(f"Quantity:{item[5]}")
+                print(f"Expected Quanity:{item[6]}")
+                print(f"{'-'*25}")
+
+            try:
+                userinput = int(input("\nEnter Code ID:"))
+                break
+            except ValueError:
+                print("Please Enter Numbers")
+                clearConsole(1.5)
+
+        for item in inventory:
+            if int(item[0]) == userinput:
+                break                    
+        else:
+            print("Item do not exist... Restarting Replenish Item")
+            clearConsole(1)
+            ReplenishItem()
+        
+        while True:
+            clearConsole(0.2)
+            print(f"<{'-'*4}Item Details{'-'*4}>")
+            print(f"ID Code:{item[0]}")
+            print(f"Item Name:{item[1]}")
+            print(f"Quantity:{item[5]}\n")
+            
+            try:
+                userinput = int(input("1.Add Item\n0.Return to Main Menu\n"))            
+                if userinput == 0 or userinput == 1:
+                    break
+                else:
+                    print("Input only allow 1 or 0")
+                    time.sleep(0.6)
+            except ValueError:
+                print("Enter Only Number")
+                time.sleep(0.6)
+                
+        if userinput == 0:
+            print("Returning to Main Menu...")
+            LoadMenu()
+            
+        if userinput == 1:
+            while True:
+                try:
+                    addQuantity = int(input("Please state amount to add:"))
+                    break
+                except ValueError:
+                    print("Enter Only Number")
+                    
+                    
+            while True:        
+                clearConsole(0.2)
+                print(f"<{'-'*4}Item Details{'-'*4}>")
+                print(f"ID Code:{item[0]}")
+                print(f"Item Name:{item[1]}\n")
+                print(f"<{'-'*4}Item Changes{'-'*4}>")
+                print(f"Old Quantity:{item[5]}")
+                newQuanity = int(item[5]) + addQuantity
+                print(f"New Quantity:{newQuanity}")
+            
+                try:
+                    confirm = int(input("\n1.Confirm\n2.Cancel\n"))
+                    if confirm == 1 or confirm == 2:
+                        break
+                    else:
+                        print("Enter 1 or 0")
+                except ValueError:
+                    print("Enter Only Number")
+                    
+            if confirm == 2:
+                print("Returning to Menu..")
+                LoadMenu()
+                
+            if confirm == 1:
+                NewItemRaw = f"{item[0]}/{item[1]}/{item[2]}/{item[3]}/{item[4]}/{newQuanity}/{item[6]}\n"
+                oldItemRaw = f"{item[0]}/{item[1]}/{item[2]}/{item[3]}/{item[4]}/{item[5]}/{item[6]}"
+                with open("./Database/inventory.txt","r") as f:
+                    lines = f.readlines()
+                    
+                with open("./Database/inventory.txt","w") as f:
+                    for line in lines:
+                        if line.strip("\n") != oldItemRaw:
+                            f.write(line)
+                    f.write(NewItemRaw)
+                print("\nUpdated")
+                print("Returning to Menu..")
+                time.sleep(1)
+                LoadMenu()
+                
+
 def admin(username): # Admin-Level Consoles
+    readInventory()
     option = 0
     menu = f"""
 Welcome, {username}
@@ -435,17 +569,25 @@ Welcome, {username}
         else:
             break
 
-    if not V:
-        match option:
-            case 1:
-                clearConsole(2)
-                insert()
-            case 4:
-                clearConsole(2)
-                stockTaking()
-            case 8:
-                clearConsole(2)
-                addUser()  
+    match option:
+        case 1:
+            clearConsole(2)
+            insert()
+        case 4:
+            clearConsole(2)
+            stockTaking()
+        case 5:
+            clearConsole(2)
+            ReplenishsList()
+        case 6:
+            clearConsole(2)
+            ReplenishItem()
+        case 8:
+            clearConsole(2)
+            addUser()  
+        case _:
+            print("Invalid")
+            LoadMenu()
 
 
 # ---- Below are start functions -----
@@ -459,20 +601,18 @@ def startupFirstLogin(): # only use this function once for the program to start
     return username,auth
 
 def LoadMenu():
-    if not V: # Need to ask lect if we can use match case or not.. 
-        match UserDatas[1]:
-            case 0:
-                admin(username=UserDatas[0])
-            case 1:
-                print("Invi")
-            case 2:
-                print("Purc")
+    match UserDatas[1]:
+        case 0:
+            admin(username=UserDatas[0])
+        case 1:
+            print("Invi")
+        case 2:
+            print("Purc")
 
 """
 VERSIONCHECKER WILL RUN 1ST NO MATTER WHAT!
 """
 inventory = []
-readInventory()
 V = VERSIONCHECKER() # If the version is 3.10 above, will return FALSE    
 UserDatas = startupFirstLogin() # Userdata consist of 2 main data, username and auth level
 LoadMenu()

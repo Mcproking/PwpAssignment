@@ -116,13 +116,15 @@ def stockTaking(restart = False): # Stock Taking | Auth = Admin/Inventory Checke
                 f.write(NewItemRaw)    
             return
 
-def ReplenishsList():
+def ReplenishsList(): # Check Which item to replenish | Auth = Admin/Purchaser
+
     Replenish_item = []
     for item in inventory:
         if item[5] < item[6]: # if the quanity is less then expected ammount
             Replenish_item.append(item)
-
-    for item in Replenish_item:
+            
+    print(f"<{'-'*4}Replenish Item List{'-'*4}>\n{'-'*25}")# print out the Replenish_item
+    for item in Replenish_item: 
         print(f"ID Code:{item[0]}")
         print(f"Item Name:{item[1]}")
         print(f"Quantity:{item[5]}")
@@ -131,9 +133,89 @@ def ReplenishsList():
 
 
 
+    
 
+def ReplenishItem():
+    while True:   
+        print(f"<{'-'*4}Replenish Item List{'-'*4}>")
+        try:
+            userinput = int(input("1.Enter ID Code\n2.List all Inventory\n0.Return to Main Menu\n"))
+            break
+        except ValueError:
+            print("Please Enter Numbers")
+            #clearConsole(0.2)
+            
+        if userinput == 1:
+            break
+        elif userinput == 2:
+            #clearConsole(0.2)
+            for item in inventory:
+                print(f"ID Code:{item[0]}")
+                print(f"Item Name:{item[1]}")
+                print(f"Quantity:{item[5]}")
+                print(f"Expected Quanity:{item[6]}")
+                print(f"{'-'*25}")
+            break
+        elif userinput == 0:
+            pass #loadMenu()
+        else:
+            print("Enter Value 1 or 2 ")
+    while True:        
+        #clearConsole(0.2)
+        userinput = int(input("Enter Code ID:"))
+        for item in inventory:
+            if int(item[0]) == userinput:
+                print(f"ID Code:{item[0]}")
+                print(f"Item Name:{item[1]}")
+                print(f"Quantity:{item[5]}")
+                break
+        else:
+            print("Item do not exist")
+            #clearConsole(0.2)
+            ReplenishItem()
+                
+        userinput = int(input("1.Add Item\n0.Return to Main Menu\n"))
+            
+        if userinput == 0:
+            pass #loadmenu()
+        if userinput == 1:
+            while True:
+                try:
+                    addQuantity = int(input("Please state amount to add:"))
+                    break
+                except ValueError:
+                    print("Enter Only Number")
+            print(f"<{'-'*4}Item Details{'-'*4}>")
+            print(f"ID Code:{item[0]}")
+            print(f"Item Name:{item[1]}\n")
+            print(f"<{'-'*4}Item Changes{'-'*4}>")
+            print(f"Old Quantity:{item[5]}")
+            newQuanity = int(item[5]) + addQuantity
+            print(f"New Quantity:{newQuanity}")
+            confirm = int(input("1.Confirm\n2.Cancel\n"))
+            if confirm == 2:
+                print("Returning to Menu..")
+                #loadmenu()
+            if confirm == 1:
+                NewItemRaw = f"{item[0]}/{item[1]}/{item[2]}/{item[3]}/{item[4]}/{newQuanity}/{item[6]}\n"
+                oldItemRaw = f"{item[0]}/{item[1]}/{item[2]}/{item[3]}/{item[4]}/{item[5]}/{item[6]}"
+                with open("./Database/inventory.txt","r") as f:
+                    lines = f.readlines()
+                    
+                with open("./Database/inventory.txt","w") as f:
+                    for line in lines:
+                        if line.strip("\n") != oldItemRaw:
+                            f.write(line)
+                    f.write(NewItemRaw)
+            print("\nUpdated")
+            print("Returning to Menu..")
+            time.sleep(1)
+            LoadMenu()
+
+            
 
 readInventory()
+ReplenishItem()
 # ReplenishsList()
 # stockTaking()
 
