@@ -554,9 +554,9 @@ Welcome, {username}
         clearConsole(1)
         print(menu)
         try:
-            option = int(input("Select an option above: "))
+            option = int(input("Select an option from above: "))
         except ValueError:
-            print("Enter Number Only")
+            print("Enter an option between 1 to 8.")
         
         if option == -1:
             print("Program will be exiting soon..")
@@ -566,7 +566,7 @@ Welcome, {username}
         if option <= 0 or option >= 9:
             print("Please enter an option between 1 to 8")
             time.sleep(1)
-            # After the user input the worng value, it will reprint the menu screen
+            # After the user input the wrong value, it will reprint the menu screen
         else:
             break
 
