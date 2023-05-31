@@ -579,7 +579,7 @@ Welcome, {username}
             stockTaking()
         case 5:
             clearConsole(2)
-            ReplenishsList()
+            ReplenishList()
         case 6:
             clearConsole(2)
             ReplenishItem()
