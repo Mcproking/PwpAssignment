@@ -7,34 +7,28 @@ def delete():
     master_delete_list = []
     while True:
         try:
-            delete_code = int(input("Enter the item code to delete or enter '-1' to cancel: "))
-            if delete_code == -1:
-                cancel_delete()
-                break
-            elif delete_code < 0:
+            try:
+                delete_code = int(input("Enter the item code to delete or enter '-1' to cancel: "))
+                if delete_code == -1:
+                    cancel_delete()
+                    break
+                elif delete_code < 0:
+                    print("Please enter a valid code.")
+                else:
+                    with open("./Database/inventory.txt", "r") as f:
+                        f.seek(0)
+                        for line in f.readlines():
+                            itemDetails = line.strip().split("/")
+                            master_delete_list.append(itemDetails)
+            except ValueError:
                 print("Please enter a valid code.")
-            else:
-                with open("./Database/inventory.txt", "r+") as f:
-                    f.seek(0)
-                    for line in f.readlines():
-                        itemDetails = line.strip().split("/")
-                        master_delete_list.append(itemDetails)
-        except ValueError:
-            print("Please enter a valid code.")
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+        except FileNotFoundError:
+            print("File not found.")
+        except IOError:
+            print("Error occurred.")
+        except Exception as e:
+            print("Error occurred:", str(e))
+delete()                       
 
 
 #update
@@ -142,7 +136,7 @@ def update():
                 item = int(input("Enter the code of the item that you want to update or enter '-1' to cancel: "))
                 if item == -1:
                     cancel_update()
-                    return
+                    break
                 elif item < 0:
                     print("Please enter a valid code.")
                 else:
