@@ -446,7 +446,7 @@ def stockTaking(restart = False): # Stock Taking | Auth = Admin/Inventory Checke
 
 def insert(): # Insert New Item | Auth = Admin
     master_insert_list = []
-    while True:
+    while True: # if the user enter -1, it will stop this entire insert
         code = code_insert()
         if code == -1:
             break
@@ -471,7 +471,7 @@ def insert(): # Insert New Item | Auth = Admin
         insert = [code, description, category, unit, price, quantity, minimum]
         master_insert_list.append(insert)
 
-        while True:
+        while True: # asking user for confirmation of insert this item
             choose = str(input("Do you still want to insert more items? Enter Y for Yes or N for No: "))
             if choose.upper() != "Y" and choose.upper() != "N":
                 print("Please enter Y or N.")
@@ -482,7 +482,7 @@ def insert(): # Insert New Item | Auth = Admin
             continue
         else:
             clearConsole(0.5)
-            for list in master_insert_list:
+            for list in master_insert_list: # double confirming the item that is going to insert
                 print(f"Item Code:{list[0]}")
                 print(f"Description:{list[1]}")
                 print(f"Category:{list[2]}")
@@ -502,7 +502,7 @@ def insert(): # Insert New Item | Auth = Admin
                     break
                 elif userinput == 2:
                     LoadMenu()
-                    
+            # Inserting the item with rewriting the inventory.txt        
             with open("./Database/inventory.txt", "a") as f:   
                 for item in master_insert_list:
                     f.write(f"{item[0]}/{item[1]}/{item[2]}/{item[3]}/{item[4]}/{item[5]}/{item[6]}\n")
@@ -529,7 +529,7 @@ def ReplenishList(): # Check Which item to replenish | Auth = Admin/Purchaser
     LoadMenu()
 
 def ReplenishItem():
-    while True:   
+    while True: # give out a menu for letting user to go back to menu if needed
         print(f"<{'-'*4}Replenish Item List Menu{'-'*4}>")
         try:
             userinput = int(input("1.Add Quantity\n0.Return to Main Menu\n"))
@@ -552,7 +552,7 @@ def ReplenishItem():
     
     while True:
         while True:
-            for item in inventory:
+            for item in inventory: # this print the list of inventory to the user
                 print(f"ID Code:{item[0]}")
                 print(f"Item Name:{item[1]}")
                 print(f"Quantity:{item[5]}")
@@ -574,7 +574,7 @@ def ReplenishItem():
             clearConsole(1)
             ReplenishItem()
         
-        while True:
+        while True: # Make the user to double confirm if this is the correct one
             clearConsole(0.2)
             print(f"<{'-'*4}Item Details{'-'*4}>")
             print(f"ID Code:{item[0]}")
@@ -597,7 +597,7 @@ def ReplenishItem():
             LoadMenu()
             
         if userinput == 1:
-            while True:
+            while True: # adding the quantity
                 try:
                     addQuantity = int(input("Please state amount to add:"))
                     break
@@ -605,7 +605,7 @@ def ReplenishItem():
                     print("Enter Only Number")
                     
                     
-            while True:        
+            while True: # Double confirm that the quantity added        
                 clearConsole(0.2)
                 print(f"<{'-'*4}Item Details{'-'*4}>")
                 print(f"ID Code:{item[0]}")
@@ -627,7 +627,8 @@ def ReplenishItem():
             if confirm == 2:
                 print("Returning to Menu..")
                 LoadMenu()
-                
+            
+            # Rewriting the inventory.txt file    
             if confirm == 1:
                 NewItemRaw = f"{item[0]}/{item[1]}/{item[2]}/{item[3]}/{item[4]}/{newQuanity}/{item[6]}\n"
                 oldItemRaw = f"{item[0]}/{item[1]}/{item[2]}/{item[3]}/{item[4]}/{item[5]}/{item[6]}"
@@ -649,7 +650,7 @@ def update():
     
     while True:
         try:
-            try:
+            try: # to let the user to exit this function
                 item = int(input("Enter the code of the item that you want to update or enter '-1' to cancel: "))
                 if item == -1:
                     cancel_update()
@@ -657,23 +658,23 @@ def update():
                 elif item < 0:
                     print("Please enter a valid code.")
                 else:
-                    with open("./Database/inventory.txt", "r") as f:
+                    with open("./Database/inventory.txt", "r") as f: # reread the inventory.txt file
                         f.seek(0)
                         read = f.readlines()
                         for line in read:
                             itemDetails = line.strip().split("/")
                             master_update_list.append(itemDetails)
-                        for items in master_update_list:
+                        for items in master_update_list: # emurate the list and check if the item exist
                             if int(items[0]) == item:
                                 print("\nItem details:")
                                 print(items, end = "\n")
                                 oldItems = f"{items[0]}/{items[1]}/{items[2]}/{items[3]}/{items[4]}/{items[5]}/{items[6]}"
                                 updateOption = update_options()
                             
-                                if updateOption == -1:
+                                if updateOption == -1: # give user to have the choice to exit
                                     break
 
-                                if updateOption == 1:
+                                if updateOption == 1: # change the id of the item
                                     code_up = code_update()
                                     items[0] = code_up
                                     updatedItem = f"{items[0]}/{items[1]}/{items[2]}/{items[3]}/{items[4]}/{items[5]}/{items[6]}"
@@ -684,7 +685,7 @@ def update():
                                         f.write(updatedItem + "\n")
                                     print("Item code updated successfully.")
 
-                                elif updateOption == 2:
+                                elif updateOption == 2: # change the item name
                                     description_up = description_update()
                                     items[1] = description_up
                                     updatedItem = f"{items[0]}/{items[1]}/{items[2]}/{items[3]}/{items[4]}/{items[5]}/{items[6]}"
@@ -695,7 +696,7 @@ def update():
                                         f.write(updatedItem + "\n")
                                     print("Item description updated successfully.")
 
-                                elif updateOption == 3:
+                                elif updateOption == 3: # change the item category
                                     category_up = category_update()
                                     items[2] = category_up
                                     updatedItem = f"{items[0]}/{items[1]}/{items[2]}/{items[3]}/{items[4]}/{items[5]}/{items[6]}"
@@ -706,7 +707,7 @@ def update():
                                         f.write(updatedItem + "\n")
                                     print("Item category updated successfully.")
 
-                                elif updateOption == 4:
+                                elif updateOption == 4: # change the item's unit
                                     unit_up = unit_update()
                                     items[3] = unit_up
                                     updatedItem = f"{items[0]}/{items[1]}/{items[2]}/{items[3]}/{items[4]}/{items[5]}/{items[6]}"
@@ -717,7 +718,7 @@ def update():
                                         f.write(updatedItem + "\n")
                                     print("Item unit updated successfully.")
 
-                                elif updateOption == 5:
+                                elif updateOption == 5: # change the price of the item
                                     price_up = price_update()
                                     items[4] = price_up
                                     updatedItem = f"{items[0]}/{items[1]}/{items[2]}/{items[3]}/{items[4]}/{items[5]}/{items[6]}"
@@ -728,7 +729,7 @@ def update():
                                         f.write(updatedItem + "\n")
                                     print("Item price updated successfully.")
 
-                                else:
+                                else: # CHange the minimum amount for the item 
                                     minimum_up = minimum_update()
                                     items[6] = minimum_up
                                     updatedItem = f"{items[0]}/{items[1]}/{items[2]}/{items[3]}/{items[4]}/{items[5]}/{items[6]}"
@@ -749,7 +750,7 @@ def update():
             except ValueError:
                 print("Please enter a valid code.")
             
-            while True:
+            while True: # let user see if needed to use this function again
                 choose_up = str(input("Do you still want to update more items? Enter Y for Yes or N for No: "))
                 if choose_up.upper() != "Y" and choose_up.upper() != "N":
                     print("Please enter Y or N.")
@@ -769,15 +770,11 @@ def update():
         except Exception as e:
             print("Error occurred:", str(e))
 
-def cancel_delete():
-    print("Cancelled")
-    print("Back to Main Menu...")
-
 def delete():
     master_delete_list = []
     while True:
         try:
-            try:
+            try: # let user to have choice to exit this function
                 delete_code = int(input("Enter the item code to delete or enter '-1' to cancel: "))
                 if delete_code == -1:
                     cancel_delete()
@@ -785,18 +782,18 @@ def delete():
                 elif delete_code < 0:
                     print("Please enter a valid code.")
                 else:
-                    with open("./Database/inventory.txt", "r") as f:
+                    with open("./Database/inventory.txt", "r") as f: # reread the file
                         f.seek(0)
                         read = f.readlines()
                     for line in read:
                         itemDetails = line.strip().split("/")
                         master_delete_list.append(itemDetails)
-                    for items in master_delete_list:
+                    for items in master_delete_list: # emurate the list
                         if int(items[0]) == delete_code:
                             print("\nItem details:")
                             print(items, end = "\n\n")
                             confirm = delete_confirm()
-                            if confirm == "Y":
+                            if confirm == "Y": # remove the item
                                 master_delete_list.remove(items)
                                 with open("./Database/inventory.txt", "w") as new:
                                     for items in master_delete_list:
@@ -823,7 +820,7 @@ def delete():
 
 def search():
     temp_inventory = []
-    def searchDescription():
+    def searchDescription(): # search using description
         while True:
             try:
                 search = str(input("Enter Description:"))
@@ -836,7 +833,7 @@ def search():
                 temp_inventory.append(item)
         # print(temp_inventory)           
 
-    def searchCode():
+    def searchCode(): # search using id
         while True:
             try:
                 minRange = int(input("Enter Range from:"))
@@ -849,7 +846,7 @@ def search():
                 temp_inventory.append(item)
         # print(temp_inventory)
         
-    def searchCategory():
+    def searchCategory(): # search using category
         while True:
             try:
                 search = str(input("Enter Category:"))
@@ -861,7 +858,7 @@ def search():
                 temp_inventory.append(item)
         # print(temp_inventory)
 
-    def searchPrice():
+    def searchPrice(): # search using price
         while True:
             try:
                 minRange = float(input("Enter Range from:")) # 4
@@ -877,9 +874,10 @@ def search():
     
     while True: 
         try:
-            print(f"<{'-'*7}Search By{'-'*7}>")
+            # have a menu to search based on which choice
+            print(f"<{'-'*7}Search By{'-'*7}>") 
             userinput = int(input("1.Search by Description\n2.Seatch by Code Range\n3.Search by Category\n4.Seacrh by Price Range\n"))
-            match userinput:
+            match userinput: # from the choice of 1 to 4, uses case below
                 case 1:
                     clearConsole(0.5)
                     searchDescription()
@@ -900,7 +898,8 @@ def search():
                     print("Enter only 1 to 4")  
         except ValueError:
             print("Enter only Number from 1 to 4")
-            
+    
+    # print out the result
     print(f"<{'-'*7}Search Results{'-'*7}>")
     for item in temp_inventory:
         print(f"ID Code: {item[0]}")
@@ -914,7 +913,7 @@ def search():
     LoadMenu()
 
 
-
+# ---- User's Authority Fucntions ----
 def admin(username): # Admin-Level Consoles
     option = 0
     menu = f"""Welcome, {username}.
@@ -980,8 +979,7 @@ def admin(username): # Admin-Level Consoles
             print("Invalid")
             LoadMenu()
 
-#inventory-checker
-def inventory_Checker(username):
+def inventory_Checker(username): # Inventory-Checker Consoles
     menu = f"""Welcome, {username}.
 <------- INVENTORY-CHECKER MENU ------->
 1. Stock Taking
@@ -1015,8 +1013,7 @@ def inventory_Checker(username):
             clearConsole(1.5)
             search()
 
-#Purchaser
-def purchaser(username):
+def purchaser(username): # Purchaser Consoles
     menu = f"""Welcome, {username}.
 <------- PURCHASER MENU ------->
 1. View Replenish List
@@ -1052,7 +1049,6 @@ def purchaser(username):
         case 3:
             clearConsole(1.5)
             search()
-
 
 
 # ---- Below are start functions -----
