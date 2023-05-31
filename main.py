@@ -401,7 +401,7 @@ def insert(): # Insert New Item | Auth = Admin
     time.sleep(2)
     LoadMenu()
 
-def ReplenishsList(): # Check Which item to replenish | Auth = Admin/Purchaser
+def ReplenishList(): # Check Which item to replenish | Auth = Admin/Purchaser
     Replenish_item = []
     for item in inventory:
         if item[5] < item[6]: # if the quanity is less then expected ammount
