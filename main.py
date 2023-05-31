@@ -127,6 +127,142 @@ def minimum_insert(description):
         except ValueError:
             print("Please enter a valid minimum threshold.")
 
+# ---- 
+def cancel_delete():
+    print("Cancelled")
+    print("Back to menu...")
+
+def delete():
+    master_delete_list = []
+    while True:
+        try:
+            delete_code = int(input("Enter the item code to delete or enter '-1' to cancel: "))
+            if delete_code == -1:
+                cancel_delete()
+                break
+            elif delete_code < 0:
+                print("Please enter a valid code.")
+            else:
+                with open("./Database/inventory.txt", "r+") as f:
+                    f.seek(0)
+                    for line in f.readlines():
+                        itemDetails = line.strip().split("/")
+                        master_delete_list.append(itemDetails)
+        except ValueError:
+            print("Please enter a valid code.")
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#update
+def cancel_update():
+        print("Cancelled")
+        print("Back to menu..") 
+
+def update_options():
+    print("""
+1. Code
+2. Description
+3. Category
+4. Unit
+5. Price
+6. Minimum Threshold Allowed""")
+
+    while True:
+        try:
+            select = int(input("\nSelect which data to update or enter '-1' to cancel: "))
+            if select == -1:
+                return select
+            elif select < 1 or select > 6:
+                print("Please enter between 1 to 6.")
+            else:
+                return select
+        except ValueError:
+            print("Please enter between 1 to 6.")
+
+def code_update():
+    while True:
+        try:
+            code_up = int(input("Enter the updated code of the item or enter '-1' to cancel: "))
+            if code_up == -1:
+                cancel_update()
+                return code_up
+            elif code_up < 0:
+                print("Please enter a valid code.")
+            else:
+                return code_up
+        except ValueError:
+            print("Please enter a valid code.")
+
+def description_update():
+    description_up = str(input("Enter the updated description of the item or enter '-1' to cancel: "))
+    if description_up == "-1":
+        cancel_update()
+        return description_up
+    else:
+        description_up = description_up.title()
+        return description_up
+
+def category_update():
+    category_up = str(input("Enter the updated category of the item or enter '-1' to cancel: "))
+    if category_up == "-1":
+        cancel_update()
+        return category_up
+    else:
+        category_up = category_up.title()
+        return category_up
+
+def unit_update():
+    unit_up = str(input("Enter the updated unit of the item or enter '-1' to cancel: "))
+    if unit_up == "-1":
+        cancel_update()
+        return unit_up
+    else:
+        unit_up = unit_up.title()
+        return unit_up
+
+def price_update():
+    while True:
+        try:
+            price_up = float(input("Enter the updated price of the item or enter '-1' to cancel: "))
+            if price_up == -1:
+                cancel_update()
+                return price_up
+            elif price_up <= 0:
+                print("Please enter a valid price.")
+            else:
+                price_up = round(price_up, 2)
+                return price_up
+        except ValueError:
+            print("Please enter a valid price.")
+
+def minimum_update():
+    while True:
+        try:
+            minimum_up = int(input("Enter the updated minimum threshold allowed for the item or enter '-1' to cancel: "))
+            if minimum_up == -1:
+                cancel_update()
+                return minimum_up
+            elif minimum_up <= 0:
+                print("Please enter a valid minimum threshold.")
+            else:
+                return minimum_up
+        except ValueError:
+            print("Please enter a valid minimum threshold.")
+
+
 # ---- Primary function below ----
 def login(): # Login Page with User Identification
     username = str(input("Enter your username: "))
@@ -531,6 +667,245 @@ def ReplenishItem():
                 time.sleep(1)
                 LoadMenu()
                 
+def update():
+    master_update_list = []
+    
+    while True:
+        try:
+            try:
+                item = int(input("Enter the code of the item that you want to update or enter '-1' to cancel: "))
+                if item == -1:
+                    cancel_update()
+                    return
+                elif item < 0:
+                    print("Please enter a valid code.")
+                else:
+                    with open("./Database/inventory.txt", "r") as f:
+                        f.seek(0)
+                        read = f.readlines()
+                        for line in read:
+                            itemDetails = line.strip().split("/")
+                            master_update_list.append(itemDetails)
+                        for items in master_update_list:
+                            if int(items[0]) == item:
+                                print("\nItem details:")
+                                print(items, end = "\n")
+                                oldItems = f"{items[0]}/{items[1]}/{items[2]}/{items[3]}/{items[4]}/{items[5]}/{items[6]}"
+                                updateOption = update_options()
+                            
+                                if updateOption == -1:
+                                    break
+
+                                elif updateOption == 1:
+                                    code_up = code_update()
+                                    items[0] = code_up
+                                    updatedItem = f"{items[0]}/{items[1]}/{items[2]}/{items[3]}/{items[4]}/{items[5]}/{items[6]}"
+                                    with open("./Database/inventory.txt", "w") as f:
+                                        for line in read:
+                                            if line.strip("\n") != oldItems:
+                                                f.write(line)
+                                        f.write(updatedItem + "\n")
+                                    print("Item code updated successfully.")
+
+                                elif updateOption == 2:
+                                    description_up = description_update()
+                                    items[1] = description_up
+                                    updatedItem = f"{items[0]}/{items[1]}/{items[2]}/{items[3]}/{items[4]}/{items[5]}/{items[6]}"
+                                    with open("./Database/inventory.txt", "w") as f:
+                                        for line in read:
+                                            if line.strip("\n") != oldItems:
+                                                f.write(line)
+                                        f.write(updatedItem + "\n")
+                                    print("Item description updated successfully.")
+
+                                elif updateOption == 3:
+                                    category_up = category_update()
+                                    items[2] = category_up
+                                    updatedItem = f"{items[0]}/{items[1]}/{items[2]}/{items[3]}/{items[4]}/{items[5]}/{items[6]}"
+                                    with open("./Database/inventory.txt", "w") as f:
+                                        for line in read:
+                                            if line.strip("\n") != oldItems:
+                                                f.write(line)
+                                        f.write(updatedItem + "\n")
+                                    print("Item category updated successfully.")
+
+                                elif updateOption == 4:
+                                    unit_up = unit_update()
+                                    items[3] = unit_up
+                                    updatedItem = f"{items[0]}/{items[1]}/{items[2]}/{items[3]}/{items[4]}/{items[5]}/{items[6]}"
+                                    with open("./Database/inventory.txt", "w") as f:
+                                        for line in read:
+                                            if line.strip("\n") != oldItems:
+                                                f.write(line)
+                                        f.write(updatedItem + "\n")
+                                    print("Item unit updated successfully.")
+
+                                elif updateOption == 5:
+                                    price_up = price_update()
+                                    items[4] = price_up
+                                    updatedItem = f"{items[0]}/{items[1]}/{items[2]}/{items[3]}/{items[4]}/{items[5]}/{items[6]}"
+                                    with open("./Database/inventory.txt", "w") as f:
+                                        for line in read:
+                                            if line.strip("\n") != oldItems:
+                                                f.write(line)
+                                        f.write(updatedItem + "\n")
+                                    print("Item price updated successfully.")
+
+                                else:
+                                    minimum_up = minimum_update()
+                                    items[6] = minimum_up
+                                    updatedItem = f"{items[0]}/{items[1]}/{items[2]}/{items[3]}/{items[4]}/{items[5]}/{items[6]}"
+                                    with open("./Database/inventory.txt", "w") as f:
+                                        for line in read:
+                                            if line.strip("\n") != oldItems:
+                                                f.write(line)
+                                        f.write(updatedItem + "\n")
+                                    print("Item minimum threshold updated successfully.")
+                                break
+                            else:
+                                print("Item not found.")
+                                break
+                        if updateOption == -1:
+                            cancel_update()
+                            break
+            except ValueError:
+                print("Please enter a valid code.")
+            
+            while True:
+                choose_up = str(input("Do you still want to update more items? Enter Y for Yes or N for No: "))
+                if choose_up.upper() != "Y" and choose_up.upper() != "N":
+                    print("Please enter Y or N.")
+                else:
+                    break
+            if choose_up.upper() == "Y":
+                update()
+            else:
+                print("Item(s) have been updated successfully.")
+                print("Back to menu...")
+            break
+        except FileNotFoundError:
+            print("File not found.")
+        except IOError:
+            print("Error occurred.")
+        except Exception as e:
+            print("Error occurred:", str(e))
+
+def cancel_delete():
+    print("Cancelled")
+    print("Back to menu...")
+
+def delete():
+    master_delete_list = []
+    while True:
+        try:
+            delete_code = int(input("Enter the item code to delete or enter '-1' to cancel: "))
+            if delete_code == -1:
+                cancel_delete()
+                break
+            elif delete_code < 0:
+                print("Please enter a valid code.")
+            else:
+                with open("./Database/inventory.txt", "r+") as f:
+                    f.seek(0)
+                    for line in f.readlines():
+                        itemDetails = line.strip().split("/")
+                        master_delete_list.append(itemDetails)
+        except ValueError:
+            print("Please enter a valid code.")
+
+def search():
+    temp_inventory = []
+    def searchDescription():
+        while True:
+            try:
+                search = str(input("Enter Description:"))
+                break
+            except ValueError:
+                print("Enter worng Value")
+             
+        for item in inventory:
+            if search in item[1]:
+                temp_inventory.append(item)
+        # print(temp_inventory)           
+
+    def searchCode():
+        while True:
+            try:
+                minRange = int(input("Enter Range from:"))
+                maxRange = int(input("Enter Range to:"))
+                break
+            except ValueError:
+                print("Enter Numbers only")
+        for item in inventory:
+            if int(item[0]) in range(minRange,maxRange):
+                temp_inventory.append(item)
+        # print(temp_inventory)
+        
+    def searchCategory():
+        while True:
+            try:
+                search = str(input("Enter Category:"))
+                break
+            except ValueError:
+                print("Enter correct value.")
+        for item in inventory:
+            if search in item[2]:
+                temp_inventory.append(item)
+        # print(temp_inventory)
+
+    def searchPrice():
+        while True:
+            try:
+                minRange = float(input("Enter Range from:")) # 4
+                maxRange = float(input("Enter Range to:")) # 10
+                break
+            except ValueError:
+                print("Enter Numbers only")
+        for item in inventory:
+            if float(item[4]) >= minRange and float(item[4]) <= maxRange:
+                temp_inventory.append(item)
+        # print(temp_inventory)
+
+    
+    while True: 
+        try:
+            print(f"<{'-'*7}Search By{'-'*7}>")
+            userinput = int(input("1.Search by Description\n2.Seatch by Code Range\n3.Search by Category\n4.Seacrh by Price Range\n"))
+            match userinput:
+                case 1:
+                    clearConsole(0.5)
+                    searchDescription()
+                    break
+                case 2:
+                    clearConsole(0.5)
+                    searchCode()
+                    break
+                case 3:
+                    clearConsole(0.5)
+                    searchCategory()
+                    break
+                case 4:
+                    clearConsole(0.5)
+                    searchPrice()
+                    break
+                case _:  
+                    print("Enter only 1 to 4")  
+        except ValueError:
+            print("Enter only Number from 1 to 4")
+            
+    print(f"<{'-'*7}Search Results{'-'*7}>")
+    for item in temp_inventory:
+        print(f"ID Code: {item[0]}")
+        print(f"Item Name: {item[1]}")
+        print(f"Category: {item[2]}")
+        print(f"Price: {item[4]}")
+        print(f"Quantity: {item[5]}")
+        print(f"{'-'*25}")
+        
+    input("Press enter to go back to Main Menu")
+    LoadMenu()
+
+
 
 def admin(username): # Admin-Level Consoles
     readInventory()
@@ -572,19 +947,28 @@ Welcome, {username}
 
     match option:
         case 1:
-            clearConsole(2)
+            clearConsole(1.5)
             insert()
+        case 2:
+            clearConsole(1.5)
+            update()
+        case 3:
+            clearConsole(1.5)
+            delete()
         case 4:
-            clearConsole(2)
+            clearConsole(1.5)
             stockTaking()
         case 5:
-            clearConsole(2)
-            ReplenishsList()
+            clearConsole(1.5)
+            ReplenishList()
         case 6:
-            clearConsole(2)
+            clearConsole(1.5)
             ReplenishItem()
+        case 7:
+            clearConsole(1.5)
+            search()
         case 8:
-            clearConsole(2)
+            clearConsole(1.5)
             addUser()  
         case _:
             print("Invalid")
