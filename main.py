@@ -41,7 +41,7 @@ def readInventory():
 # ---- Below are Function use for Insert item ----            
 def cancel_insert():
         print("Cancelled")
-        print("Back to menu..")     
+        print("Back to Main Menu..")     
         
 def code_insert():
     while True:
@@ -127,49 +127,24 @@ def minimum_insert(description):
         except ValueError:
             print("Please enter a valid minimum threshold.")
 
-# ---- 
+# ---- Below are Function for delete item ----
 def cancel_delete():
     print("Cancelled")
     print("Back to menu...")
 
-def delete():
-    master_delete_list = []
+def delete_confirm():
     while True:
-        try:
-            delete_code = int(input("Enter the item code to delete or enter '-1' to cancel: "))
-            if delete_code == -1:
-                cancel_delete()
-                break
-            elif delete_code < 0:
-                print("Please enter a valid code.")
-            else:
-                with open("./Database/inventory.txt", "r+") as f:
-                    f.seek(0)
-                    for line in f.readlines():
-                        itemDetails = line.strip().split("/")
-                        master_delete_list.append(itemDetails)
-        except ValueError:
-            print("Please enter a valid code.")
+        confirm = str(input("Enter Y to confirm the deletion of the above item or enter N to cancel: "))
+        if confirm.upper() != "Y" and confirm.upper() != "N":
+            print("Please enter Y or N.")
+        else:
+            return confirm.upper()
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-#update
+# ---- Below are Function for update item ----
 def cancel_update():
         print("Cancelled")
-        print("Back to menu..") 
+        print("Back to Main Menu..") 
 
 def update_options():
     print("""
@@ -540,7 +515,7 @@ def insert(): # Insert New Item | Auth = Admin
 def ReplenishList(): # Check Which item to replenish | Auth = Admin/Purchaser
     Replenish_item = []
     for item in inventory:
-        if item[5] < item[6]: # if the quanity is less then expected ammount
+        if int(item[5]) < int(item[6]): # if the quanity is less then expected ammount
             Replenish_item.append(item)
             
     print(f"<{'-'*4}Replenish Item List{'-'*4}>\n{'-'*25}")# print out the Replenish_item
@@ -550,6 +525,8 @@ def ReplenishList(): # Check Which item to replenish | Auth = Admin/Purchaser
         print(f"Quantity:{item[5]}")
         print(f"Expected Quanity:{item[6]}")
         print(f"{'-'*25}")
+    input("Press Enter to go Back to Main Menu")
+    LoadMenu()
 
 def ReplenishItem():
     while True:   
@@ -583,7 +560,7 @@ def ReplenishItem():
                 print(f"{'-'*25}")
 
             try:
-                userinput = int(input("\nEnter Code ID:"))
+                userinput = int(input("Enter Code ID:"))
                 break
             except ValueError:
                 print("Please Enter Numbers")
@@ -676,7 +653,7 @@ def update():
                 item = int(input("Enter the code of the item that you want to update or enter '-1' to cancel: "))
                 if item == -1:
                     cancel_update()
-                    return
+                    LoadMenu()
                 elif item < 0:
                     print("Please enter a valid code.")
                 else:
@@ -696,7 +673,7 @@ def update():
                                 if updateOption == -1:
                                     break
 
-                                elif updateOption == 1:
+                                if updateOption == 1:
                                     code_up = code_update()
                                     items[0] = code_up
                                     updatedItem = f"{items[0]}/{items[1]}/{items[2]}/{items[3]}/{items[4]}/{items[5]}/{items[6]}"
@@ -762,12 +739,13 @@ def update():
                                         f.write(updatedItem + "\n")
                                     print("Item minimum threshold updated successfully.")
                                 break
-                            else:
-                                print("Item not found.")
-                                break
+                        else:
+                            print("Item not found.")
+                            clearConsole(1.5)
+                            update()
                         if updateOption == -1:
                             cancel_update()
-                            break
+                            LoadMenu()
             except ValueError:
                 print("Please enter a valid code.")
             
@@ -781,7 +759,8 @@ def update():
                 update()
             else:
                 print("Item(s) have been updated successfully.")
-                print("Back to menu...")
+                print("Back to Main Menu...")
+                LoadMenu()
             break
         except FileNotFoundError:
             print("File not found.")
@@ -792,26 +771,55 @@ def update():
 
 def cancel_delete():
     print("Cancelled")
-    print("Back to menu...")
+    print("Back to Main Menu...")
 
 def delete():
     master_delete_list = []
     while True:
         try:
-            delete_code = int(input("Enter the item code to delete or enter '-1' to cancel: "))
-            if delete_code == -1:
-                cancel_delete()
-                break
-            elif delete_code < 0:
-                print("Please enter a valid code.")
-            else:
-                with open("./Database/inventory.txt", "r+") as f:
-                    f.seek(0)
-                    for line in f.readlines():
+            try:
+                delete_code = int(input("Enter the item code to delete or enter '-1' to cancel: "))
+                if delete_code == -1:
+                    cancel_delete()
+                    LoadMenu()
+                elif delete_code < 0:
+                    print("Please enter a valid code.")
+                else:
+                    with open("./Database/inventory.txt", "r") as f:
+                        f.seek(0)
+                        read = f.readlines()
+                    for line in read:
                         itemDetails = line.strip().split("/")
                         master_delete_list.append(itemDetails)
-        except ValueError:
-            print("Please enter a valid code.")
+                    for items in master_delete_list:
+                        if int(items[0]) == delete_code:
+                            print("\nItem details:")
+                            print(items, end = "\n\n")
+                            confirm = delete_confirm()
+                            if confirm == "Y":
+                                master_delete_list.remove(items)
+                                with open("./Database/inventory.txt", "w") as new:
+                                    for items in master_delete_list:
+                                        newDetails = f"{items[0]}/{items[1]}/{items[2]}/{items[3]}/{items[4]}/{items[5]}/{items[6]}"
+                                        new.write(newDetails + "\n")
+                                print("Item deleted successfully.")
+                                print("Returning to Main Menu")
+                                LoadMenu()
+                            else:
+                                print("Back to Main Menu...")
+                                LoadMenu()
+                    else:
+                        print("Item not found.")
+                        print("Back to Main Menu...")
+                        LoadMenu()
+            except ValueError:
+                print("Please enter a valid code.")
+        except FileNotFoundError:
+            print("File not found.")
+        except IOError:
+            print("Error occurred.")
+        except Exception as e:
+            print("Error occurred:", str(e))
 
 def search():
     temp_inventory = []
@@ -902,16 +910,14 @@ def search():
         print(f"Quantity: {item[5]}")
         print(f"{'-'*25}")
         
-    input("Press enter to go back to Main Menu")
+    input("Press enter to go Back to Main Menu")
     LoadMenu()
 
 
 
 def admin(username): # Admin-Level Consoles
-    readInventory()
     option = 0
-    menu = f"""
-Welcome, {username}
+    menu = f"""Welcome, {username}.
 <------- ADMIN MENU ------->
 1. Insert New Item
 2. Update Item
@@ -976,8 +982,7 @@ Welcome, {username}
 
 #inventory-checker
 def inventory_Checker(username):
-    menu = f"""
-Welcome, {username}
+    menu = f"""Welcome, {username}.
 <------- INVENTORY-CHECKER MENU ------->
 1. Stock Taking
 2. Search Items
@@ -988,22 +993,31 @@ Welcome, {username}
         clearConsole(1)
         print(menu)
         try:
-            option = int(input("Select an option from above: "))
-            if option == -1:
-                print("Program will be exiting soon..")
-                time.sleep(3)
-                exit()
-            if option < 1 or option > 2:
-                print("Please enter an option between 1 and 2.")
-                time.sleep(1)
+            option = int(input("Select an option from above: "))                
         except ValueError:
             print("Please enter an option between 1 and 2.")
-       
+            
+        if option == -1:
+            print("Program will be exiting soon..")
+            time.sleep(3)
+            exit()
+        if option < 1 or option > 2:
+            print("Please enter an option between 1 and 2.")
+            time.sleep(1)
+        else:
+            break
+
+    match option:
+        case 1:
+            clearConsole(1.5)
+            stockTaking()
+        case 2:
+            clearConsole(1.5)
+            search()
 
 #Purchaser
 def purchaser(username):
-    menu = f"""
-Welcome, {username}
+    menu = f"""Welcome, {username}.
 <------- PURCHASER MENU ------->
 1. View Replenish List
 2. Stock Replenishment
@@ -1016,15 +1030,28 @@ Welcome, {username}
         print(menu)
         try:
             option = int(input("Select an option from above: "))
-            if option == -1:
-                print("Program will be exiting soon..")
-                time.sleep(3)
-                exit()
-            if option < 1 or option > 3:
-                print("Please enter an option between 1 and 3.")
-                time.sleep(1)
         except ValueError:
             print("Please enter an option between 1 and 3.")
+
+        if option == -1:
+            print("Program will be exiting soon..")
+            time.sleep(3)
+            exit()
+        if option < 1 or option > 3:
+            print("Please enter an option between 1 and 3.")
+            time.sleep(1)
+        else:
+            break
+    match option:
+        case 1:
+            clearConsole(1.5)
+            ReplenishList()
+        case 2:
+            clearConsole(1.5)
+            ReplenishItem()
+        case 3:
+            clearConsole(1.5)
+            search()
 
 
 
@@ -1039,26 +1066,18 @@ def startupFirstLogin(): # only use this function once for the program to start
     return username,auth
 
 def LoadMenu():
+    readInventory()
     match UserDatas[1]:
         case 0:
             admin(username=UserDatas[0])
         case 1:
-            print("Invi")
+            inventory_Checker(username=UserDatas[0])
         case 2:
-            print("Purc")
+            purchaser(username=UserDatas[0])
 
-"""
-VERSIONCHECKER WILL RUN 1ST NO MATTER WHAT!
-"""
+
 inventory = []
-V = VERSIONCHECKER() # If the version is 3.10 above, will return FALSE    
+V = VERSIONCHECKER() # If the version is 3.10 above, will return FALSE. If below, the program would not run    
 UserDatas = startupFirstLogin() # Userdata consist of 2 main data, username and auth level
 LoadMenu()
 
-# else:
-#     if loginSuccess[1] == 0:
-#         admin(V=V)
-#     elif loginSuccess[1] == 1:
-#         pass
-#     elif loginSuccess[1] == 2:
-#         pass
