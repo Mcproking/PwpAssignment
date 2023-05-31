@@ -1,3 +1,64 @@
+import os
+import time
+#inventory-checker
+
+def inventory_Checker(username):
+    menu = f"""
+Welcome, {username}
+<------- INVENTORY-CHECKER MENU ------->
+1. Stock Taking
+2. Search Items
+
+-1. Exit Program
+"""
+    while True:
+        clearConsole(1)
+        print(menu)
+        try:
+            option = int(input("Select an option from above: "))
+            if option == -1:
+                print("Program will be exiting soon..")
+                time.sleep(3)
+                exit()
+            if option < 1 or option > 2:
+                print("Please enter an option between 1 and 2.")
+                time.sleep(1)
+        except ValueError:
+            print("Please enter an option between 1 and 2.")
+
+        
+#Purchaser
+def purchaser(username):
+    menu = f"""
+Welcome, {username}
+<------- PURCHASER MENU ------->
+1. View Replenish List
+2. Stock Replenishment
+3. Search Items
+
+-1. Exit Program
+"""
+    while True:
+        clearConsole(1)
+        print(menu)
+        try:
+            option = int(input("Select an option from above: "))
+            if option == -1:
+                print("Program will be exiting soon..")
+                time.sleep(3)
+                exit()
+            if option < 1 or option > 3:
+                print("Please enter an option between 1 and 3.")
+                time.sleep(1)
+        except ValueError:
+            print("Please enter an option between 1 and 3.")
+
+
+
+
+
+
+
 #delete
 def cancel_delete():
     print("Cancelled")

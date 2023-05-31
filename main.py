@@ -929,9 +929,9 @@ Welcome, {username}
         clearConsole(1)
         print(menu)
         try:
-            option = int(input("Select an option above: "))
+            option = int(input("Select an option from above: "))
         except ValueError:
-            print("Enter Number Only")
+            print("Enter an option between 1 to 8.")
         
         if option == -1:
             print("Program will be exiting soon..")
@@ -941,7 +941,7 @@ Welcome, {username}
         if option <= 0 or option >= 9:
             print("Please enter an option between 1 to 8")
             time.sleep(1)
-            # After the user input the worng value, it will reprint the menu screen
+            # After the user input the wrong value, it will reprint the menu screen
         else:
             break
 
@@ -973,6 +973,59 @@ Welcome, {username}
         case _:
             print("Invalid")
             LoadMenu()
+
+#inventory-checker
+def inventory_Checker(username):
+    menu = f"""
+Welcome, {username}
+<------- INVENTORY-CHECKER MENU ------->
+1. Stock Taking
+2. Search Items
+
+-1. Exit Program
+"""
+    while True:
+        clearConsole(1)
+        print(menu)
+        try:
+            option = int(input("Select an option from above: "))
+            if option == -1:
+                print("Program will be exiting soon..")
+                time.sleep(3)
+                exit()
+            if option < 1 or option > 2:
+                print("Please enter an option between 1 and 2.")
+                time.sleep(1)
+        except ValueError:
+            print("Please enter an option between 1 and 2.")
+       
+
+#Purchaser
+def purchaser(username):
+    menu = f"""
+Welcome, {username}
+<------- PURCHASER MENU ------->
+1. View Replenish List
+2. Stock Replenishment
+3. Search Items
+
+-1. Exit Program
+"""
+    while True:
+        clearConsole(1)
+        print(menu)
+        try:
+            option = int(input("Select an option from above: "))
+            if option == -1:
+                print("Program will be exiting soon..")
+                time.sleep(3)
+                exit()
+            if option < 1 or option > 3:
+                print("Please enter an option between 1 and 3.")
+                time.sleep(1)
+        except ValueError:
+            print("Please enter an option between 1 and 3.")
+
 
 
 # ---- Below are start functions -----
