@@ -170,18 +170,6 @@ def update(code_up, description_up, category_up, unit_up, price_up, minimum_up):
 
                         
 
-        
-
-
-
-
-
-
-
-
-
-
-
 
 #Insert
 def cancel():
