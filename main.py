@@ -46,7 +46,7 @@ def cancel_insert():
 def code_insert():
     while True:
         try:
-            code = int(input("Enter the code of the item or enter '-1' to cancel: "))
+            code = int(input("Enter the code of the new item or enter '-1' to cancel: "))
             if code == -1:
                 cancel_insert()
                 return code
