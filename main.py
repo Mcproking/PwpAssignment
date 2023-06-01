@@ -849,7 +849,7 @@ def search():
                 print("Enter worng Value")
              
         for item in inventory:
-            if search in item[1]:
+            if search.title() in item[1]:
                 temp_inventory.append(item)
         # print(temp_inventory)           
 
