@@ -2,6 +2,7 @@ import os
 import time
 from platform import python_version
 
+# This program is only suitable to run on Python 3.10 and above
 # This is to check the version of python
 # If the Python version is 3.9 and below, then use IF-ELSE instead of MATCH-CASE
 def VERSIONCHECKER():
