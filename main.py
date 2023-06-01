@@ -95,7 +95,7 @@ def price_insert(description):
                 print("Please enter a valid price.")
             else:
                 price = round(price, 2)
-                return price
+                return ("%.2f" % price)
         except ValueError:
             print("Please enter a valid price.")
 
@@ -487,7 +487,7 @@ def insert(): # Insert New Item | Auth = Admin
                 print(f"Description:{list[1]}")
                 print(f"Category:{list[2]}")
                 print(f"Unit:{list[3]}")
-                print(f"Price:{list[4]:.2f}")
+                print(f"Price:{list[4]}")
                 print(f"Quanity:{list[5]}")
                 print(f"Minimum:{list[6]}")
                 print(f"{'-'*15}")
@@ -529,10 +529,12 @@ def ReplenishList(): # Check Which item to replenish | Auth = Admin/Purchaser
     LoadMenu()
 
 def ReplenishItem():
+    Replenish_item = []
+    
     while True: # give out a menu for letting user to go back to menu if needed
         print(f"<{'-'*4}Replenish Item List Menu{'-'*4}>")
         try:
-            userinput = int(input("1.Add Quantity\n0.Return to Main Menu\n"))
+            userinput = int(input("1.Add Quantity\n2.Show Inventory\n0.Return to Main Menu\n"))
             break
         except ValueError:
             print("Please Enter Numbers")
@@ -543,6 +545,19 @@ def ReplenishItem():
           
     if userinput == 1:
         clearConsole(0.2)
+    elif userinput == 2:
+        clearConsole(0.2)
+        print(f"<{'-'*7}Inventory List{'-'*7}>")
+        for item in inventory: # this print the list of inventory to the user
+            print(f"ID Code:{item[0]}")
+            print(f"Item Name:{item[1]}")
+            print(f"Quantity:{item[5]}")
+            print(f"Expected Quanity:{item[6]}")
+            print(f"{'-'*25}")
+        input("Enter to go back Replenish Item Menu")
+        time.sleep(1)
+        clearConsole(0)
+        ReplenishItem()
     elif userinput == 0:
         LoadMenu()
     else:
@@ -551,21 +566,26 @@ def ReplenishItem():
         ReplenishItem()
     
     while True:
+        for item in inventory:
+                if int(item[5]) < int(item[6]): # if the quanity is less then expected ammount
+                    Replenish_item.append(item)
+                    
         while True:
-            for item in inventory: # this print the list of inventory to the user
+            print(f"<{'-'*4}Replenish Item List{'-'*4}>\n{'-'*25}")# print out the Replenish_item
+            for item in Replenish_item: 
                 print(f"ID Code:{item[0]}")
                 print(f"Item Name:{item[1]}")
                 print(f"Quantity:{item[5]}")
                 print(f"Expected Quanity:{item[6]}")
                 print(f"{'-'*25}")
-
+            
             try:
                 userinput = int(input("Enter Code ID:"))
                 break
             except ValueError:
                 print("Please Enter Numbers")
                 clearConsole(1.5)
-
+        
         for item in inventory:
             if int(item[0]) == userinput:
                 break                    
