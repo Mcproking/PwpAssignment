@@ -11,7 +11,7 @@ def VERSIONCHECKER():
         exit()
     if int(version[1]) <= 9:
         print("Match Case Doesnt Exist. Changing to If-Else")
-        return True
+        exit()
     else:
         print("Python up-to-date beyond 3.10")
         return False
