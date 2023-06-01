@@ -1094,6 +1094,6 @@ def LoadMenu():
 
 inventory = []
 V = VERSIONCHECKER() # If the version is 3.10 above, will return FALSE. If below, the program would not run    
-UserDatas = startupFirstLogin() # User data consist of 2 main data, username and auth level
+UserDatas = startupFirstLogin() # User data consists of 2 main data, username and auth level
 LoadMenu()
 
