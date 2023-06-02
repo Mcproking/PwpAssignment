@@ -1,5 +1,5 @@
 import os
-import time
+from time import sleep
 from platform import python_version
 
 # This program is only suitable to run on Python 3.10 and above
@@ -11,7 +11,7 @@ def VERSIONCHECKER():
         print("Using Python 2, Please Python 3")
         exit()
     if int(version[1]) <= 9:
-        print("Match Case Doesnt Exist. Changing to If-Else")
+        print("Match Case Doesnt Exist. Please use Python 3.10")
         exit()
     else:
         print("Python up-to-date beyond 3.10")
@@ -25,7 +25,7 @@ def clearConsole(length = 5):
         os.system('cls')
     def unixClear():
         os.system('clear')
-    time.sleep(length)     
+    sleep(length)     
     if os.name == 'nt':
         windowsClear()
     else:
@@ -442,7 +442,7 @@ def stockTaking(restart = False): # Stock Taking | Auth = Admin/Inventory Checke
                 f.write(NewItemRaw)
             print("\nUpdated")
             print("Returning to Menu..")
-            time.sleep(1)
+            sleep(1)
             LoadMenu()
 
 def insert(): # Insert New Item | Auth = Admin
@@ -510,7 +510,7 @@ def insert(): # Insert New Item | Auth = Admin
                     pass
             print("Item(s) have been inserted successfully.")
             break
-    time.sleep(2)
+    sleep(2)
     LoadMenu()
 
 def ReplenishList(): # Check which item to replenish | Auth = Admin/Purchaser
@@ -556,7 +556,7 @@ def ReplenishItem():
             print(f"Expected Quantity:{item[6]}")
             print(f"{'-'*25}")
         input("Enter to go back to Replenish Item Menu")
-        time.sleep(1)
+        sleep(1)
         clearConsole(0)
         ReplenishItem()
     elif userinput == 0:
@@ -608,10 +608,10 @@ def ReplenishItem():
                     break
                 else:
                     print("Input only allows 1 or 0")
-                    time.sleep(0.6)
+                    sleep(0.6)
             except ValueError:
                 print("Enter Only Number")
-                time.sleep(0.6)
+                sleep(0.6)
                 
         if userinput == 0:
             print("Returning to Main Menu...")
@@ -663,7 +663,7 @@ def ReplenishItem():
                     f.write(NewItemRaw)
                 print("\nUpdated")
                 print("Returning to Menu..")
-                time.sleep(1)
+                sleep(1)
                 LoadMenu()
                 
 def update():
@@ -961,12 +961,12 @@ def admin(username): # Admin-Level Consoles
         
         if option == -1:
             print("Program will be exiting soon..")
-            time.sleep(3)
+            sleep(3)
             exit()
             
         if option <= 0 or option >= 9:
             print("Please enter an option between 1 to 8")
-            time.sleep(1)
+            sleep(1)
             # After the user input the wrong value, it will reprint the menu screen
         else:
             break
@@ -1018,11 +1018,11 @@ def inventory_Checker(username): # Inventory-Checker Consoles
             
         if option == -1:
             print("Program will be exiting soon..")
-            time.sleep(3)
+            sleep(3)
             exit()
         if option < 1 or option > 2:
             print("Please enter an option between 1 and 2.")
-            time.sleep(1)
+            sleep(1)
         else:
             break
 
@@ -1053,11 +1053,11 @@ def purchaser(username): # Purchaser Consoles
 
         if option == -1:
             print("Program will be exiting soon..")
-            time.sleep(3)
+            sleep(3)
             exit()
         if option < 1 or option > 3:
             print("Please enter an option between 1 and 3.")
-            time.sleep(1)
+            sleep(1)
         else:
             break
     match option:
