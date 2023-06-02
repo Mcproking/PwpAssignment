@@ -251,17 +251,16 @@ def login(): # Login Page with User Identification
     
     for user in Users:
         if user[0] == username and user[1] == password:
-            if not V:
-                match user[2]:
-                    case 'Admin':
-                        level = 0
-                    case 'Inventory-Checker':
-                        level = 1
-                    case 'Purchaser':
-                        level = 2
-                print("\nLogin Sucessful!")
-                print("Loading Menu...")
-                return True, level, user[0]
+            match user[2]:
+                case 'Admin':
+                    level = 0
+                case 'Inventory-Checker':
+                    level = 1
+                case 'Purchaser':
+                    level = 2
+            print("\nLogin Sucessful!")
+            print("Loading Menu...")
+            return True, level, user[0]
     else:
         print("Username or Password Incorrect")
         return False, -1
@@ -1094,7 +1093,7 @@ def LoadMenu():
 
 
 inventory = []
-V = VERSIONCHECKER() # If the version is 3.10 above, will return FALSE. If below, the program would not run    
+VERSIONCHECKER() # If the version is 3.10 above, will return FALSE. If below, the program would not run    
 UserDatas = startupFirstLogin() # User data consists of 2 main data, username and auth level
 LoadMenu()
 
