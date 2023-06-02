@@ -467,7 +467,7 @@ def insert(): # Insert New Item | Auth = Admin
         if quantity == -1:
             break
         minimum = minimum_insert(description)
-        if quantity == -1:
+        if minimum == -1:
             break
         insert = [code, description, category, unit, price, quantity, minimum]
         master_insert_list.append(insert)
