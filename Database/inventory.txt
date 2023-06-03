@@ -6,8 +6,7 @@
 41000/Broccoli/Vegetables/Pieces/2.50/23/10
 11000/Cheese/Dairy/Pack/10.00/20/5
 12000/Yogurt/Dairy/Box/15.00/40/20
-13000/Butter/Pack/4.00/24/20
-14000/Ice Cream/Dairy/Box/20.00/5/10
+13000/Butter/Dairy/Pack/4.00/24/20
 15000/Condensed Milk/Dairy/Bottle/10.00/30/14
 16000/Yogurt Drink/Dairy/Bottle/15.00/33/30
 17000/Soya Milk/Dairy/Bottle/7.00/23/30
