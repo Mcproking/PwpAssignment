@@ -4,3 +4,37 @@
 30000/Apple/Fruits/Pieces/2.00/50/30
 32000/Orange/Fruits/Pieces/2.50/50/30
 41000/Broccoli/Vegetables/Pieces/2.50/23/10
+11000/Cheese/Dairy/Pack/10.00/20/5
+12000/Yogurt/Dairy/Box/15.00/40/20
+13000/Butter/Pack/4.00/24/20
+14000/Ice Cream/Dairy/Box/20.00/5/10
+15000/Condensed Milk/Dairy/Bottle/10.00/30/14
+16000/Yogurt Drink/Dairy/Bottle/15.00/33/30
+17000/Soya Milk/Dairy/Bottle/7.00/23/30
+22000/Chicken Breast/Freezer/Pack/25.00/40/50
+23000/Chicken Wing/Freezer/Pack/20.00/30/50
+24000/Fish/Freezer/Pack/35.00/55/50
+25000/Frozen Nuggets/Freezer/Pack/22.00/30/30
+26000/Frozen Fries/Freezer/Pack/22.00/30/30
+27000/Prawn/Freezer/Pack/36.00/59/50
+31000/Papaya/Fruits/Pieces/8.00/23/40
+33000/Watermelon/Fruits/Pieces/20.00/10/30
+34000/Mango/Fruits/Pieces/7.00/8/50
+35000/Strawberry/Fruits/Pack/15.00/20/20
+36000/Grapes/Fruits/Pack/11.00/9/40
+37000/Durian/Fruits/Pieces/40.00/40/20
+40000/Cauliflower/Vegetables/Pieces/2.50/24/10
+42000/Spinach/Vegetables/Pack/2.00/30/10
+43000/Carrot/Vegetables/Pieces/3.00/35/10
+44000/Corn/Vegetables/Pieces/3.00/30/10
+45000/Cabbage/Vegetables/Pieces/2.50/20/10
+46000/Brinjal/Vegetables/Pieces/4.50/33/10
+47000/Lettuce/Vegetables/Pieces/3.50/1/10
+50000/Ketchup/Sauce/Bottle/5.00/15/10
+51000/Chili Sauce/Sauce/Bottle/5.00/25/10
+52000/Mustard/Sauce/Bottle/7.00/20/10
+53000/Thousand Island/Sauce/Bottle/8.00/10/10
+54000/Barbecue Sauce/Sauce/Bottle/8.00/8/10
+55000/Oyster Sauce/Sauce/Bottle/14.00/22/10
+56000/Tartar Sauce/Sauce/Bottle/8.00/30/10
+57000/Mayonnaise/Sauce/Bottle/7.00/12/10

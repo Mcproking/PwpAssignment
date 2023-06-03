@@ -1,0 +1,17 @@
+BEGIN 
+
+    INITIALISE Inventory,item  
+
+    DEFINE readInventory() 
+
+        OPEN FILE (./Database/inventory.txt) FOR READ 
+
+        FOR line IN READFILE (./Database/inventory.txt) 
+
+            SET item = line WHILE line REMOVE WHITESPACE AND “/” 
+
+            APPEND item to Inventory 
+
+        ENDFOR 
+
+END 
