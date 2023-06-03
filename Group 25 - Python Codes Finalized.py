@@ -925,8 +925,10 @@ def search():
         print(f"Item Code: {item[0]}")
         print(f"Item Name: {item[1]}")
         print(f"Category: {item[2]}")
+        print(f"Unit: {item[3]}")
         print(f"Price: {item[4]}")
         print(f"Quantity: {item[5]}")
+        print(f"Minimum Threshold: {item[6]}")
         print(f"{'-'*25}")
         
     input("Press enter to go Back to Main Menu")
