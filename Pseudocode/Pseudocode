@@ -1,17 +1,14 @@
-BEGIN 
-
-    INITIALISE Inventory,item  
-
-    DEFINE readInventory() 
-
-        OPEN FILE (./Database/inventory.txt) FOR READ 
-
-        FOR line IN READFILE (./Database/inventory.txt) 
-
-            SET item = line WHILE line REMOVE WHITESPACE AND “/” 
-
-            APPEND item to Inventory 
-
-        ENDFOR 
-
-END 
+START
+    INITIALIZE description
+    DEFINE description_insert(code):
+        DISPLAY (f"Enter the description of item {code} or enter '-1' to cancel: ")
+        READ description AS str
+        IF description == '-1':
+            cancel_insert()
+            RETURN description
+        ELSE:
+            SET description = description.title()
+            RETURN description
+        ENDIF
+    ENDDEF
+END
