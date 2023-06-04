@@ -781,7 +781,9 @@ def update():
                             LoadMenu()
             except ValueError:
                 print("Please enter a valid code.")
-            if code_up == -1 or description_up == "-1" or category_up == "-1" or unit_up == "-1" or price_up == -1 or minimum_up == -1:
+            if code_up or price_up or minimum_up in [-1]:
+                LoadMenu()
+            if description_up or category_up or unit_up in ["-1"]:
                 LoadMenu()
             while True: # asking the user whether the user wants to update more items or not
                 choose_up = str(input("Do you still want to update more items? Enter Y for Yes or N for No: "))
