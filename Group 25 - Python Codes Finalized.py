@@ -220,7 +220,7 @@ def price_update():
                 print("Please enter a valid price.")
             else:
                 price_up = round(price_up, 2)
-                return price_up
+                return ("%.2f" % price_up)
         except ValueError:
             print("Please enter a valid price.")
 
