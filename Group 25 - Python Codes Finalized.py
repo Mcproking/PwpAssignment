@@ -710,7 +710,7 @@ def update():
                                 elif updateOption == 2: # change the item description
                                     description_up = description_update()
                                     if description_up == "-1":
-                                        break
+                                        LoadMenu()
                                     items[1] = description_up
                                     updatedItem = f"{items[0]}/{items[1]}/{items[2]}/{items[3]}/{items[4]}/{items[5]}/{items[6]}"
                                     with open("./Database/inventory.txt", "w") as f:
@@ -723,7 +723,7 @@ def update():
                                 elif updateOption == 3: # change the item category
                                     category_up = category_update()
                                     if category_up == "-1":
-                                        break
+                                        LoadMenu()
                                     items[2] = category_up
                                     updatedItem = f"{items[0]}/{items[1]}/{items[2]}/{items[3]}/{items[4]}/{items[5]}/{items[6]}"
                                     with open("./Database/inventory.txt", "w") as f:
@@ -736,7 +736,7 @@ def update():
                                 elif updateOption == 4: # change the item's unit
                                     unit_up = unit_update()
                                     if unit_up == "-1":
-                                        break
+                                        LoadMenu()
                                     items[3] = unit_up
                                     updatedItem = f"{items[0]}/{items[1]}/{items[2]}/{items[3]}/{items[4]}/{items[5]}/{items[6]}"
                                     with open("./Database/inventory.txt", "w") as f:
@@ -749,7 +749,7 @@ def update():
                                 elif updateOption == 5: # change the price of the item
                                     price_up = price_update()
                                     if price_up == -1:
-                                        break
+                                        LoadMenu()
                                     items[4] = price_up
                                     updatedItem = f"{items[0]}/{items[1]}/{items[2]}/{items[3]}/{items[4]}/{items[5]}/{items[6]}"
                                     with open("./Database/inventory.txt", "w") as f:
@@ -762,7 +762,7 @@ def update():
                                 else: # Change the minimum threshold allowed for the item 
                                     minimum_up = minimum_update()
                                     if minimum_up == -1:
-                                        break
+                                        LoadMenu()
                                     items[6] = minimum_up
                                     updatedItem = f"{items[0]}/{items[1]}/{items[2]}/{items[3]}/{items[4]}/{items[5]}/{items[6]}"
                                     with open("./Database/inventory.txt", "w") as f:
@@ -781,10 +781,7 @@ def update():
                             LoadMenu()
             except ValueError:
                 print("Please enter a valid code.")
-            if code_up or price_up or minimum_up in [-1]:
-                LoadMenu()
-            if description_up or category_up or unit_up in ["-1"]:
-                LoadMenu()
+
             while True: # asking the user whether the user wants to update more items or not
                 choose_up = str(input("Do you still want to update more items? Enter Y for Yes or N for No: "))
                 if choose_up.upper() != "Y" and choose_up.upper() != "N":
