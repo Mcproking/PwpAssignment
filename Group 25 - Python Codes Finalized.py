@@ -697,7 +697,7 @@ def update():
                                 if updateOption == 1: # change the code of the item
                                     code_up = code_update()
                                     if code_up == -1:
-                                        break
+                                        LoadMenu()
                                     items[0] = code_up
                                     updatedItem = f"{items[0]}/{items[1]}/{items[2]}/{items[3]}/{items[4]}/{items[5]}/{items[6]}"
                                     with open("./Database/inventory.txt", "w") as f:
