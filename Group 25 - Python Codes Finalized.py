@@ -258,7 +258,7 @@ def login(): # Login Page with User Identification
                     level = 1
                 case 'Purchaser':
                     level = 2
-            print("\nLogin Sucessful!")
+            print("\nLogin Successful!")
             print("Loading Menu...")
             return True, level, user[0]
     else:
