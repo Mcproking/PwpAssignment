@@ -779,22 +779,23 @@ def update():
                         if updateOption == -1:
                             cancel_update()
                             LoadMenu()
+                        while True: # asking the user whether the user wants to update more items or not
+                            choose_up = str(input("Do you still want to update more items? Enter Y for Yes or N for No: "))
+                            if choose_up.upper() != "Y" and choose_up.upper() != "N":
+                                print("Please enter Y or N.")
+                            else:
+                                break
+                        if choose_up.upper() == "Y":
+                            update()
+                        else:
+                            print("Item(s) have been updated successfully.")
+                            print("Back to Main Menu...")
+                            LoadMenu()
+                        break
             except ValueError:
                 print("Please enter a valid code.")
 
-            while True: # asking the user whether the user wants to update more items or not
-                choose_up = str(input("Do you still want to update more items? Enter Y for Yes or N for No: "))
-                if choose_up.upper() != "Y" and choose_up.upper() != "N":
-                    print("Please enter Y or N.")
-                else:
-                    break
-            if choose_up.upper() == "Y":
-                update()
-            else:
-                print("Item(s) have been updated successfully.")
-                print("Back to Main Menu...")
-                LoadMenu()
-            break
+            
         except FileNotFoundError:
             print("File not found.")
         except IOError:
