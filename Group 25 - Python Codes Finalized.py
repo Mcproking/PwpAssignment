@@ -41,8 +41,8 @@ def readInventory():
 
 # ---- Below are the Functions used for Insert Item ----            
 def cancel_insert():
-        print("Cancelled")
-        print("Back to Main Menu..")     
+    print("Cancelled")
+    print("Back to Main Menu..")     
         
 def code_insert():
     while True:
@@ -144,8 +144,8 @@ def delete_confirm():
 
 # ---- Below are the Functions for Update Item ----
 def cancel_update():
-        print("Cancelled")
-        print("Back to Main Menu..") 
+    print("Cancelled")
+    print("Back to Main Menu..") 
 
 def update_options():
     print("""
