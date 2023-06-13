@@ -1014,6 +1014,7 @@ def admin(username): # Admin-Level Consoles
             LoadMenu()
 
 def inventory_Checker(username): # Inventory-Checker Consoles
+    option = 0
     menu = f"""Welcome, {username}.
 <------- INVENTORY-CHECKER MENU ------->
 1. Stock Taking
@@ -1048,6 +1049,7 @@ def inventory_Checker(username): # Inventory-Checker Consoles
             search()
 
 def purchaser(username): # Purchaser Consoles
+    option = 0
     menu = f"""Welcome, {username}.
 <------- PURCHASER MENU ------->
 1. View Replenish List
