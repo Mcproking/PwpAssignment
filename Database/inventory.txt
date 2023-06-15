@@ -38,5 +38,3 @@
 55000/Oyster Sauce/Sauce/Bottle/14.00/22/10
 56000/Tartar Sauce/Sauce/Bottle/8.00/30/10
 57000/Mayonnaise/Sauce/Bottle/7.00/12/10
-38000/Kiwi/Fruits/Pack/20.00/15/10
-58000/Onion/Vegetables/Pieces/2.00/30/40
